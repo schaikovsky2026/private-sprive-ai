@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /BRIEF-
+Disallow: /CLAUDE.md
+Disallow: /README.md
+Disallow: /plan.md
+Disallow: /contract.md
+Disallow: /proposal-long.md
+Disallow: /origin.md
+
+Sitemap: https://private.sprive.ai/sitemap.xml

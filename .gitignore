@@ -1,0 +1,21 @@
+# Sensitive / internal — never deploy
+CLAUDE.md
+README.md
+plan.md
+contract.md
+proposal-long.md
+origin.md
+BRIEF-*.md
+
+# Local backup snapshots
+*.backup
+.image-originals/
+
+# Image folder docs (images themselves DO deploy)
+img/README.md
+
+# OS / editor noise
+.DS_Store
+.vscode/
+.idea/
+*.swp
