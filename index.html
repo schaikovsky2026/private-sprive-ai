@@ -9,7 +9,7 @@
 <meta property="og:description" content="Backtested +41.7%/yr, +24.3% annualized alpha (2020-2025, net of cost). Research only. Not registered investment advice.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@300&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0d12; --surface:#14171f; --ink:#e9ebef; --muted:#8b909c;
@@ -28,7 +28,15 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:4
   border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
 .nav.solid{background:rgba(11,13,18,.82);backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);border-bottom-color:var(--hairline)}
-.nav-brand{font-size:1.1rem;font-weight:700;letter-spacing:.05em;text-decoration:none;color:var(--ink)}
+.nav-brand{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:300;
+  letter-spacing:.43em;text-transform:uppercase;white-space:nowrap;text-decoration:none;color:#f5f1e8;
+  background:linear-gradient(100deg,#f5f1e8 0%,#f5f1e8 35%,#c9a961 50%,#f5f1e8 65%,#f5f1e8 100%);
+  background-size:300% 100%;background-position:100% 0;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:brandShimmer 9s ease-in-out infinite;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.7)) drop-shadow(0 0 24px rgba(0,0,0,.5))}
+.nav-brand span{display:inline-block;margin-right:-.43em}
+@keyframes brandShimmer{0%,70%{background-position:100% 0}100%{background-position:-100% 0}}
 .nav-links{display:flex;gap:34px;align-items:center}
 .nav-links a{font-size:.83rem;font-weight:500;color:var(--muted);text-decoration:none;
   transition:color .2s}
@@ -170,6 +178,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
     align-items:flex-start;gap:22px;background:rgba(11,13,18,.98);
     backdrop-filter:blur(14px);padding:28px 32px;border-bottom:1px solid var(--hairline);display:none}
   .nav.open .nav-links{display:flex}
+  .nav-brand{font-size:.8rem;letter-spacing:.3em}
   h1{font-size:2.4rem}
   h2{font-size:1.62rem}
   section{padding:80px 22px}
@@ -195,7 +204,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
 <body>
 
 <nav class="nav">
-  <a href="#top" class="nav-brand">SPRIVÉ</a>
+  <a href="#top" class="nav-brand"><span>SPRIVÉ.AI</span></a>
   <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a href="#approach">Approach</a>
