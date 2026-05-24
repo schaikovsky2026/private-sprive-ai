@@ -87,6 +87,23 @@ h2{font-size:2.15rem;font-weight:700;letter-spacing:-.022em;line-height:1.16;mar
 .principle h3{font-size:1.16rem;font-weight:600;letter-spacing:-.01em;margin-bottom:13px}
 .principle p{font-size:.92rem;color:var(--muted);line-height:1.72}
 
+/* Layers (two-card grid for signal/research) */
+.layers{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
+.layer{background:var(--surface);border:1px solid var(--hairline);border-radius:10px;
+  padding:36px 32px;display:flex;flex-direction:column}
+.layer-label{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:14px}
+.layer h3{font-size:1.18rem;font-weight:600;margin-bottom:18px;letter-spacing:-.01em}
+.layer ul{list-style:none;padding:0;margin:0 0 18px}
+.layer li{font-size:.9rem;color:var(--muted);padding:10px 0 10px 22px;
+  border-bottom:1px solid var(--hairline);position:relative;line-height:1.6}
+.layer li:last-child{border-bottom:0}
+.layer li::before{content:"";position:absolute;left:0;top:18px;width:11px;height:1px;
+  background:var(--accent)}
+.layer-foot{font-size:.82rem;color:var(--faint);font-style:italic;padding-top:14px;
+  border-top:1px solid var(--hairline);margin-top:auto}
+.dim-head{font-size:1.04rem;font-weight:600;margin:54px 0 18px;letter-spacing:-.01em}
+
 /* Tables */
 .tbl{width:100%;border-collapse:collapse}
 .tbl th{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
@@ -183,6 +200,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
   h2{font-size:1.62rem}
   section{padding:80px 22px}
   .grid3,.principles,.grid4{grid-template-columns:1fr 1fr}
+  .layers{grid-template-columns:1fr}
   .eng{grid-template-columns:1fr;gap:32px}
   .hero-stats{gap:34px}
   .hero-stat .v{font-size:1.6rem}
@@ -208,6 +226,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
   <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a href="#approach">Approach</a>
+    <a href="#selection">Selection</a>
     <a href="#performance">Performance</a>
     <a href="#engagement">Engagement</a>
     <a href="#contact" class="cta">Contact</a>
@@ -254,6 +273,59 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
       <h3>Transparency as method</h3>
       <p>Every pick is published. Every losing year — including the −36.6% return in 2008 — is disclosed. The backtest's survivorship-bias inflation is quantified, not hidden. A track record is only useful if it cannot be quietly revised after the fact.</p>
     </div>
+  </div>
+</section>
+
+<section id="selection" class="reveal">
+  <div class="section-head">
+    <div class="eyebrow">From signal to selection</div>
+    <h2>Two layers, one strategy.</h2>
+    <p class="lede">The backtest measures the mechanical signal alone. The live strategy adds a qualitative research layer on top — the work that turns a ranked list into a decision.</p>
+  </div>
+  <div class="layers">
+    <div class="layer">
+      <div class="layer-label">Layer 1 · Mechanical</div>
+      <h3>The signal (backtested)</h3>
+      <ul>
+        <li>S&amp;P 500 universe</li>
+        <li>Jegadeesh-Titman 12-1 momentum ranking</li>
+        <li>Tradable-floor screen plus quality gates</li>
+        <li>Produces ~15–30 ranked candidates each month</li>
+      </ul>
+      <p class="layer-foot">This is what the 18-year backtest validated.</p>
+    </div>
+    <div class="layer">
+      <div class="layer-label">Layer 2 · Qualitative</div>
+      <h3>The research (overlay)</h3>
+      <ul>
+        <li>Each top candidate is researched across six dimensions</li>
+        <li>Each dimension is scored 1–10, then weighted</li>
+        <li>A downside-risk gate excludes capital-loss outliers</li>
+        <li>The top five by composite score become that month's picks</li>
+      </ul>
+      <p class="layer-foot">This is what the engagement covers.</p>
+    </div>
+  </div>
+
+  <h3 class="dim-head">The six dimensions</h3>
+  <table class="tbl">
+    <thead>
+      <tr><th>Dimension</th><th class="r">Weight</th><th>What it measures</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Catalyst proximity &amp; quality</td><td class="r accent">20%</td><td class="muted">Near-term price-moving event — earnings beat, raised guidance, product launch, contract win, regulatory ruling. Higher score = sooner and more material.</td></tr>
+      <tr><td>Revenue growth acceleration</td><td class="r accent">20%</td><td class="muted">Quarter-over-quarter growth trajectory — whether the rate is speeding up, not just whether absolute growth is high.</td></tr>
+      <tr><td>Momentum quality</td><td class="r accent">20%</td><td class="muted">Strength of the 12-1 signal combined with volume confirmation and relative strength versus the S&amp;P 500.</td></tr>
+      <tr><td>Sentiment quality</td><td class="r">15%</td><td class="muted">Broad multi-source check: financial news, analyst tone, earnings-call language, social and retail sentiment, institutional commentary.</td></tr>
+      <tr><td>Continuation probability</td><td class="r">15%</td><td class="muted">Is the move sustainable? Sector tailwind, institutional flow, room versus analyst price target, position not over-crowded.</td></tr>
+      <tr><td>Fundamental quality</td><td class="r">10%</td><td class="muted">Margin expansion, Rule of 40 for software companies, operating cash flow, defensible competitive moat.</td></tr>
+    </tbody>
+  </table>
+  <p class="tbl-note">Plus a mandatory downside-risk gate: any candidate carrying material capital-loss risk — fraud allegation, going-concern issue, broken thesis — is excluded from selection regardless of its composite score. Score weights are not fixed; they will be re-evaluated against alpha contribution once thirty closed positions have accumulated.</p>
+
+  <div class="callout">
+    <strong>Honest note on backtest versus live</strong>
+    <p>The backtest above measures Layer 1 in isolation — what the mechanical signal alone would have produced. The qualitative overlay in Layer 2 may add value (avoiding fraud risk, timing catalysts), be approximately neutral, or modestly subtract value (over-thinking, missing winners). Which one is true will not be known until thirty or more closed positions have accumulated. The realistic forward expectation of +20 to +30%/yr already builds in a margin for this uncertainty.</p>
   </div>
 </section>
 
@@ -428,7 +500,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
     </div>
   </div>
   <div class="fee-line">
-    Engagement is a flat <strong>฿5,000 per month</strong> — approximately $135. No performance fee, no setup fee, no lock-up; thirty days' notice to conclude. A six-month minimum is recommended to observe the strategy across distinct market conditions. Full terms are provided on request.
+    Engagement is a flat <strong>฿5,000 per month</strong> — approximately $135. No performance fee, no setup fee, no lock-up; thirty days' notice to conclude. A six-month minimum is recommended to observe the strategy across distinct market conditions. <strong style="color:var(--ink)">Scoring weights are re-evaluated against alpha contribution once thirty closed positions have accumulated</strong> — the framework adapts to evidence rather than remaining static. Full terms are provided on request.
   </div>
 </section>
 
