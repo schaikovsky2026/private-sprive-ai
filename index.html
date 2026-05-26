@@ -76,8 +76,11 @@ h2{font-size:2.15rem;font-weight:700;letter-spacing:-.022em;line-height:1.16;mar
 .stat .v.neg{color:#e0876b}
 .stat .k{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);margin-top:9px}
+.stat .p{font-size:.78rem;font-weight:400;color:var(--faint);margin-top:10px;line-height:1.55}
 .grid4 .stat{padding:28px 24px}
 .grid4 .stat .v{font-size:1.7rem}
+.hero-stat .p{font-size:.78rem;font-weight:400;color:var(--faint);
+  margin-top:8px;line-height:1.55;max-width:180px}
 
 /* Principles */
 .principles{display:grid;grid-template-columns:1fr 1fr;gap:1px;
@@ -235,12 +238,24 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
 <section class="hero" id="top">
   <div class="eyebrow">PRIVATE.SPRIVÉ.AI</div>
   <h1>A systematic equity strategy,<br>privately offered.</h1>
-  <p class="hero-sub">Academic Jegadeesh-Titman 12-1 momentum factor, applied monthly to the S&amp;P 500. Backtested across eighteen years — including the 2008 financial crisis and the 2009 momentum crash.</p>
+  <p class="hero-sub">A monthly stock-picking method that buys the S&amp;P 500's strongest year-long performers — known in academic finance as <em>Jegadeesh-Titman 12-1 momentum</em>. Tested across 18 years of market history, including the 2008 financial crisis and the 2009 recovery.</p>
   <p class="hero-micro">Research only. Not registered investment advice. You trade your own brokerage account.</p>
   <div class="hero-stats">
-    <div class="hero-stat"><div class="v accent">+35.2%</div><div class="k">Annualized · 18-year backtest</div></div>
-    <div class="hero-stat"><div class="v accent">+23.8%</div><div class="k">Annualized alpha vs S&amp;P 500</div></div>
-    <div class="hero-stat"><div class="v">0.95</div><div class="k">Sharpe ratio · 18-year</div></div>
+    <div class="hero-stat">
+      <div class="v accent">+35.2%</div>
+      <div class="k">Annualized · 18-year backtest</div>
+      <div class="p">Average return per year in historical testing.</div>
+    </div>
+    <div class="hero-stat">
+      <div class="v accent">+23.8%</div>
+      <div class="k">Annualized alpha vs S&amp;P 500</div>
+      <div class="p">How much more it earned than just buying the index.</div>
+    </div>
+    <div class="hero-stat">
+      <div class="v">0.95</div>
+      <div class="k">Sharpe ratio · 18-year</div>
+      <div class="p">Risk-adjusted return rating (above 0.7 is considered good).</div>
+    </div>
   </div>
 </section>
 
@@ -300,12 +315,36 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
     <p class="lede">S&amp;P 500 universe. Monthly rebalance, equal weight across five positions. All figures net of 0.15% per-trade commission. The window deliberately includes the 2008 financial crisis, the 2009 momentum crash, and the 2022 bear market — the three regimes most threatening to momentum strategies.</p>
   </div>
   <div class="grid3">
-    <div class="stat"><div class="v accent">+35.2%</div><div class="k">Annualized Return</div></div>
-    <div class="stat"><div class="v">+11.4%</div><div class="k">S&amp;P 500 Annualized</div></div>
-    <div class="stat"><div class="v accent">+23.8%</div><div class="k">Annualized Alpha</div></div>
-    <div class="stat"><div class="v">0.95</div><div class="k">Sharpe Ratio</div></div>
-    <div class="stat"><div class="v">1.61</div><div class="k">Sortino Ratio</div></div>
-    <div class="stat"><div class="v neg">−57.6%</div><div class="k">Maximum Drawdown</div></div>
+    <div class="stat">
+      <div class="v accent">+35.2%</div>
+      <div class="k">Annualized Return</div>
+      <div class="p">Average yearly return over the full 18 years.</div>
+    </div>
+    <div class="stat">
+      <div class="v">+11.4%</div>
+      <div class="k">S&amp;P 500 Annualized</div>
+      <div class="p">What you would have earned just holding the index.</div>
+    </div>
+    <div class="stat">
+      <div class="v accent">+23.8%</div>
+      <div class="k">Annualized Alpha</div>
+      <div class="p">Yearly out-performance versus the index.</div>
+    </div>
+    <div class="stat">
+      <div class="v">0.95</div>
+      <div class="k">Sharpe Ratio</div>
+      <div class="p">Return per unit of risk. Above 0.7 is good; above 1.0 is excellent.</div>
+    </div>
+    <div class="stat">
+      <div class="v">1.61</div>
+      <div class="k">Sortino Ratio</div>
+      <div class="p">Like Sharpe but counts only downside risk. Above 1.5 is strong.</div>
+    </div>
+    <div class="stat">
+      <div class="v neg">−57.6%</div>
+      <div class="k">Maximum Drawdown</div>
+      <div class="p">Worst peak-to-trough loss in the test window — happened in 2008.</div>
+    </div>
   </div>
   <div class="callout">
     <strong>On the −57.6% drawdown</strong>
@@ -317,7 +356,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
   <div class="section-head">
     <div class="eyebrow">Stress Windows</div>
     <h2>Seven crises, eighteen years.</h2>
-    <p class="lede">The strategy's behavior in each major equity-market crisis since 2008. Returns are cumulative within the window; the strategy reading is the Jegadeesh-Titman 12-1 momentum with tradable-floor filter applied monthly.</p>
+    <p class="lede">How the strategy behaved in every major stock-market crisis since 2008. "Return" is the total gain or loss across the window; "dd" is the worst intra-window drop from the period's peak. The most important question for sophisticated capital is not the average year — it is what happens when things go badly.</p>
   </div>
   <table class="tbl">
     <thead>
@@ -340,7 +379,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
   <div class="section-head">
     <div class="eyebrow">Track Record</div>
     <h2>Every year, including the losses.</h2>
-    <p class="lede">Eighteen years of annual returns — 2008 to 2025 — shown in full. Concealing the losing years would compromise the only thing this strategy trades on.</p>
+    <p class="lede">Eighteen years of annual returns — 2008 to 2025 — shown in full. The "Alpha" column is the strategy's return minus the S&amp;P 500's return for the same year: positive means the strategy beat the index; negative means it lagged. Concealing losing years would compromise the only thing this strategy trades on.</p>
   </div>
   <table class="tbl">
     <thead>
@@ -385,10 +424,26 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
     </div>
   </div>
   <div class="grid4">
-    <div class="stat"><div class="v accent">$10.0M</div><div class="k">Strategy Final · backtest</div></div>
-    <div class="stat"><div class="v">$391k</div><div class="k">S&amp;P 500 DCA Final</div></div>
-    <div class="stat"><div class="v accent">+$9.6M</div><div class="k">Excess Outcome · backtest</div></div>
-    <div class="stat"><div class="v accent">+43.7%</div><div class="k">Annualized IRR · backtest</div></div>
+    <div class="stat">
+      <div class="v accent">$10.0M</div>
+      <div class="k">Strategy Final · backtest</div>
+      <div class="p">What the historical test ended at on a $94k total deposit.</div>
+    </div>
+    <div class="stat">
+      <div class="v">$391k</div>
+      <div class="k">S&amp;P 500 DCA Final</div>
+      <div class="p">Same deposit, just buying the index instead.</div>
+    </div>
+    <div class="stat">
+      <div class="v accent">+$9.6M</div>
+      <div class="k">Excess Outcome · backtest</div>
+      <div class="p">Hypothetical extra dollars vs the index.</div>
+    </div>
+    <div class="stat">
+      <div class="v accent">+43.7%</div>
+      <div class="k">Annualized IRR · backtest</div>
+      <div class="p">Effective yearly growth rate on money invested over time.</div>
+    </div>
   </div>
   <table class="tbl" style="margin-top:40px">
     <thead>
@@ -440,7 +495,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
   <ul class="risk-list">
     <li>This is <strong>research and educational signals</strong> — not registered investment advice in Thailand, the United States, or any other jurisdiction.</li>
     <li>The strategy was <strong>refined in May 2026</strong> after systematic factor backtesting. The previous configuration (60-day/20-day momentum with a five-filter screener) was replaced with academic Jegadeesh-Titman 12-1 momentum and a tradable-floor filter only. Both configurations are documented; the change was made on evidence, not on conviction.</li>
-    <li>The backtest carries <strong>survivorship-bias inflation</strong> because it uses current S&amp;P 500 constituents — companies that delisted (Lehman, WaMu, Bear Stearns, GM, Chrysler, and many others) are excluded. Inflation is estimated at <strong>3–5% per year over the 18-year window, 1–2% per year over the 5.6-year window</strong>. A realistic forward expectation is <strong>+20 to +30% annualized alpha</strong> versus the S&amp;P 500, not the +23.8% the backtest shows.</li>
+    <li>The backtest carries <strong>survivorship-bias inflation</strong>. Plain meaning: the test only uses companies that are in the S&amp;P 500 today, so companies that went bankrupt during the test period (Lehman Brothers, WaMu, Bear Stearns, GM, Chrysler, and dozens more) are silently excluded. The strategy never had to "buy" those — but a real investor running it in 2008 would have. The inflation is estimated at <strong>3–5% per year over the 18-year window</strong>. A realistic forward expectation is <strong>+20 to +30% annualized alpha</strong> versus the S&amp;P 500, not the +23.8% the backtest shows.</li>
     <li>The strategy lost <strong>−36.6% in 2008</strong> and showed an 18-year maximum drawdown of <strong>−57.6%</strong>. Momentum strategies are particularly exposed to deep, slow-recovering drawdowns in financial-crisis regimes. Drawdowns of −30% to −50% are plausible in any year and should be planned for, not treated as exceptional.</li>
     <li>The strategy lagged the index in fast-correction regimes (2015–16 China devaluation, 2018 Q4 sell-off, 2009 momentum-crash rally). Leadership-rotation drawdowns are a structural risk of the 12-month signal.</li>
     <li>A concentrated five-position portfolio is materially more volatile than an index fund. Single-week liquidation events can produce double-digit losses.</li>
