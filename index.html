@@ -9,7 +9,7 @@
 <meta property="og:description" content="33-year backtest: VolBand 2σ CAGR +11.45% vs SPY +10.75%, Max Drawdown −27.5% vs −50.8%. No stock picking. Twelve trades in thirty-three years.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@300&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0d12; --surface:#14171f; --ink:#e9ebef; --muted:#8b909c;
@@ -28,9 +28,15 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:4
   border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
 .nav.solid{background:rgba(11,13,18,.82);backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);border-bottom-color:var(--hairline)}
-.nav-brand{font-family:var(--font);font-size:.95rem;font-weight:700;
-  letter-spacing:.24em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
-.nav-brand .ac{color:var(--accent)}
+.nav-brand{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:300;
+  letter-spacing:.43em;text-transform:uppercase;white-space:nowrap;text-decoration:none;color:#f5f1e8;
+  background:linear-gradient(100deg,#f5f1e8 0%,#f5f1e8 35%,#c9a961 50%,#f5f1e8 65%,#f5f1e8 100%);
+  background-size:300% 100%;background-position:100% 0;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:brandShimmer 9s ease-in-out infinite;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.7)) drop-shadow(0 0 24px rgba(0,0,0,.5))}
+.nav-brand span{display:inline-block;margin-right:-.43em}
+@keyframes brandShimmer{0%,70%{background-position:100% 0}100%{background-position:-100% 0}}
 .nav-links{display:flex;gap:34px;align-items:center}
 .nav-links a{font-size:.83rem;font-weight:500;color:var(--muted);text-decoration:none;
   transition:color .2s}
@@ -181,7 +187,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
     align-items:flex-start;gap:22px;background:rgba(11,13,18,.98);
     backdrop-filter:blur(14px);padding:28px 32px;border-bottom:1px solid var(--hairline);display:none}
   .nav.open .nav-links{display:flex}
-  .nav-brand{font-size:.8rem;letter-spacing:.2em}
+  .nav-brand{font-size:.8rem;letter-spacing:.3em}
   h1{font-size:2.4rem}
   h2{font-size:1.62rem}
   section{padding:80px 22px}
@@ -206,7 +212,7 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
 <body>
 
 <nav class="nav">
-  <a href="#top" class="nav-brand">SPRIVÉ<span class="ac">.AI</span></a>
+  <a href="#top" class="nav-brand"><span>SPRIVÉ.AI</span></a>
   <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a href="#approach">Approach</a>
@@ -480,26 +486,6 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
   <div class="fee-line">
     Engagement is a flat <strong>฿3,000 per month</strong> (approximately $85), billed annually in advance. No performance fee, no setup fee, no lock-up. Thirty days' notice to conclude. The flat fee is intentional: a percent-of-assets structure would have the operator compounding faster than the client, and a performance fee would reward the operator for the years when the strategy beat SPY by 1&ndash;2 pp and ignore the years it lagged. Neither is honest. Full terms are provided on request.
   </div>
-</section>
-
-<section class="reveal">
-  <div class="section-head">
-    <div class="eyebrow">Risk Disclosure</div>
-    <h2>What you should know before subscribing.</h2>
-  </div>
-  <ul class="risk-list">
-    <li>This is <strong>research and educational signals</strong> &mdash; not registered investment advice in Thailand, the United States, or any other jurisdiction. Nothing on this page constitutes an offer to buy or sell any security.</li>
-    <li>The 33-year backtest contains <strong>no survivorship-bias inflation</strong>: the strategy holds the SPY ETF itself, not a basket of selected stocks. Every dollar shown in the historical record was technically achievable by any retail investor with brokerage access. This is the principal reason the headline numbers are far more modest than typical backtests of stock-picking systems &mdash; honest single-asset numbers always are.</li>
-    <li>The signal lags the price by one month by design (no repaint) and uses a 9-month moving average. In a <strong>fast crash</strong> &mdash; March 2020 is the canonical example &mdash; the model will not exit in time and will participate fully in the drawdown. The crisis-window table above shows exactly that outcome for COVID.</li>
-    <li>In <strong>shallow corrections</strong> (2011 euro debt, 2015&ndash;16 China selloff) the model occasionally triggers a false exit, sells near the local bottom, and re-enters after a partial recovery. The strategy underperformed SPY by 8&ndash;10 pp in those windows. These small losses are the premium paid for the protection in 2000 and 2008.</li>
-    <li>The CAGR advantage of ~0.7 pp/yr is <strong>small enough to disappear</strong> in a benign forward period with no major drawdown event. Investors expecting return enhancement will be disappointed; the value proposition is drawdown reduction, not alpha.</li>
-    <li>The strategy assumes the cash leg earns the live 3-month US Treasury bill yield (^IRX). In environments where short rates are at zero (2009&ndash;2015, 2020&ndash;2022), the cash drag is non-trivial. The backtest already reflects this.</li>
-    <li>SPY is a <strong>single asset, single country, single currency</strong>. The strategy provides no diversification beyond what the S&amp;P 500 already provides. A globally diversified portfolio would require additional overlays.</li>
-    <li>Trading frequency is low (~0.4 switches/yr) but <strong>tax treatment</strong> still matters. Short-term capital gains apply if a position is held under twelve months and held in a taxable account. The historical signal occasionally produced sub-12-month holds. Consult a tax advisor for your jurisdiction.</li>
-    <li>The backtest uses <strong>Kalman filter parameters and SMA length specified in advance</strong> (Pine library defaults: R%=0.1, Q%=0.01, 9-month window, 2σ). No optimization was performed against the historical data. Different parameter choices would produce different numbers; the published numbers reflect one specific, pre-committed configuration.</li>
-    <li>The forward live track record on this overlay <strong>has not yet been established</strong>. Live tracking starts the month of this site's publication. Backtest results &mdash; even honest ones &mdash; are inherently limited.</li>
-    <li><strong>Past performance does not guarantee future results.</strong></li>
-  </ul>
 </section>
 
 <section id="contact" class="contact reveal">
