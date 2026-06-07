@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PRIVATE.SPRIVÉ.AI — Systematic Equity Strategy</title>
-<meta name="description" content="A systematic equity strategy built on academic 12-1 momentum (Jegadeesh-Titman). 18-year backtest 2008-2025 with realistic T+1 execution.">
-<meta property="og:title" content="PRIVATE.SPRIVÉ.AI — Systematic Equity Strategy">
-<meta property="og:description" content="Academic 12-1 momentum factor, S&amp;P 500 universe. 18-year backtest +34.4%/yr, +22.8% alpha vs SPY (T+1 execution). Research only. Not registered investment advice.">
+<title>PRIVATE.SPRIVÉ.AI — Risk-Managed S&amp;P 500</title>
+<meta name="description" content="A systematic risk overlay on SPY: same long-term return, drawdowns cut nearly in half. 33-year backtest (1993-2026) on the unadjusted public index.">
+<meta property="og:title" content="PRIVATE.SPRIVÉ.AI — Risk-Managed S&amp;P 500">
+<meta property="og:description" content="33-year backtest: VolBand 2σ CAGR +11.45% vs SPY +10.75%, Max Drawdown −27.5% vs −50.8%. No stock picking. Twelve trades in thirty-three years.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0b0d12; --surface:#14171f; --ink:#e9ebef; --muted:#8b909c;
@@ -28,15 +28,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:4
   border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
 .nav.solid{background:rgba(11,13,18,.82);backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);border-bottom-color:var(--hairline)}
-.nav-brand{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:300;
-  letter-spacing:.43em;text-transform:uppercase;white-space:nowrap;text-decoration:none;color:#f5f1e8;
-  background:linear-gradient(100deg,#f5f1e8 0%,#f5f1e8 35%,#c9a961 50%,#f5f1e8 65%,#f5f1e8 100%);
-  background-size:300% 100%;background-position:100% 0;
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  animation:brandShimmer 9s ease-in-out infinite;
-  filter:drop-shadow(0 2px 8px rgba(0,0,0,.7)) drop-shadow(0 0 24px rgba(0,0,0,.5))}
-.nav-brand span{display:inline-block;margin-right:-.43em}
-@keyframes brandShimmer{0%,70%{background-position:100% 0}100%{background-position:-100% 0}}
+.nav-brand{font-family:var(--font);font-size:.95rem;font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+.nav-brand .ac{color:var(--accent)}
 .nav-links{display:flex;gap:34px;align-items:center}
 .nav-links a{font-size:.83rem;font-weight:500;color:var(--muted);text-decoration:none;
   transition:color .2s}
@@ -57,13 +51,15 @@ h2{font-size:2.15rem;font-weight:700;letter-spacing:-.022em;line-height:1.16;mar
 .section-head{margin-bottom:54px}
 
 /* Hero */
-.hero-sub{font-size:1.14rem;color:var(--muted);max-width:600px;line-height:1.7;margin-bottom:16px}
-.hero-micro{font-size:.82rem;color:var(--faint);margin-bottom:56px}
+.hero-sub{font-size:1.14rem;color:var(--muted);max-width:660px;line-height:1.7;margin-bottom:16px}
+.hero-micro{font-size:.82rem;color:var(--faint);margin-bottom:56px;max-width:600px}
 .hero-stats{display:flex;gap:60px;flex-wrap:wrap;padding-top:36px;border-top:1px solid var(--hairline)}
 .hero-stat .v{font-size:2rem;font-weight:700;letter-spacing:-.02em}
 .hero-stat .v.accent{color:var(--accent)}
 .hero-stat .k{font-size:.71rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
   color:var(--muted);margin-top:7px}
+.hero-stat .p{font-size:.78rem;font-weight:400;color:var(--faint);
+  margin-top:8px;line-height:1.55;max-width:200px}
 
 /* Stat grid */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
@@ -79,8 +75,6 @@ h2{font-size:2.15rem;font-weight:700;letter-spacing:-.022em;line-height:1.16;mar
 .stat .p{font-size:.78rem;font-weight:400;color:var(--faint);margin-top:10px;line-height:1.55}
 .grid4 .stat{padding:28px 24px}
 .grid4 .stat .v{font-size:1.7rem}
-.hero-stat .p{font-size:.78rem;font-weight:400;color:var(--faint);
-  margin-top:8px;line-height:1.55;max-width:180px}
 
 /* Principles */
 .principles{display:grid;grid-template-columns:1fr 1fr;gap:1px;
@@ -90,22 +84,14 @@ h2{font-size:2.15rem;font-weight:700;letter-spacing:-.022em;line-height:1.16;mar
 .principle h3{font-size:1.16rem;font-weight:600;letter-spacing:-.01em;margin-bottom:13px}
 .principle p{font-size:.92rem;color:var(--muted);line-height:1.72}
 
-/* Layers (two-card grid for signal/research) */
-.layers{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
-.layer{background:var(--surface);border:1px solid var(--hairline);border-radius:10px;
-  padding:36px 32px;display:flex;flex-direction:column}
-.layer-label{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+/* Mechanism cards */
+.mech{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--hairline);border:1px solid var(--hairline);margin-top:30px}
+.mech-cell{background:var(--surface);padding:34px 28px}
+.mech-cell .lbl{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
   color:var(--accent);margin-bottom:14px}
-.layer h3{font-size:1.18rem;font-weight:600;margin-bottom:18px;letter-spacing:-.01em}
-.layer ul{list-style:none;padding:0;margin:0 0 18px}
-.layer li{font-size:.9rem;color:var(--muted);padding:10px 0 10px 22px;
-  border-bottom:1px solid var(--hairline);position:relative;line-height:1.6}
-.layer li:last-child{border-bottom:0}
-.layer li::before{content:"";position:absolute;left:0;top:18px;width:11px;height:1px;
-  background:var(--accent)}
-.layer-foot{font-size:.82rem;color:var(--faint);font-style:italic;padding-top:14px;
-  border-top:1px solid var(--hairline);margin-top:auto}
-.dim-head{font-size:1.04rem;font-weight:600;margin:54px 0 18px;letter-spacing:-.01em}
+.mech-cell h3{font-size:1.08rem;font-weight:600;margin-bottom:11px;letter-spacing:-.01em}
+.mech-cell p{font-size:.9rem;color:var(--muted);line-height:1.72}
 
 /* Tables */
 .tbl{width:100%;border-collapse:collapse}
@@ -120,11 +106,8 @@ h2{font-size:2.15rem;font-weight:700;letter-spacing:-.022em;line-height:1.16;mar
 .tbl td.neg{color:#e0876b}
 .tbl tr.hl td{background:rgba(61,123,253,.07);font-weight:600}
 .tbl tr.hl td:first-child{box-shadow:inset 2px 0 0 var(--accent)}
-.cell{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
-.minibar{width:88px;height:3px;background:var(--hairline);border-radius:2px;overflow:hidden}
-.minibar i{display:block;height:100%;background:var(--muted)}
-.tbl tr.hl .minibar i{background:var(--accent)}
 .tbl-note{font-size:.78rem;color:var(--faint);line-height:1.7;margin-top:18px}
+.tbl-wrap{overflow-x:auto}
 
 /* Panel + chart */
 .panel{background:var(--surface);border:1px solid var(--hairline);border-radius:10px;padding:30px}
@@ -198,21 +181,19 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
     align-items:flex-start;gap:22px;background:rgba(11,13,18,.98);
     backdrop-filter:blur(14px);padding:28px 32px;border-bottom:1px solid var(--hairline);display:none}
   .nav.open .nav-links{display:flex}
-  .nav-brand{font-size:.8rem;letter-spacing:.3em}
+  .nav-brand{font-size:.8rem;letter-spacing:.2em}
   h1{font-size:2.4rem}
   h2{font-size:1.62rem}
   section{padding:80px 22px}
-  .grid3,.principles,.grid4{grid-template-columns:1fr 1fr}
-  .layers{grid-template-columns:1fr}
+  .grid3,.principles,.grid4,.mech{grid-template-columns:1fr 1fr}
   .eng{grid-template-columns:1fr;gap:32px}
   .hero-stats{gap:34px}
   .hero-stat .v{font-size:1.6rem}
   .tbl th,.tbl td{padding:12px 9px;font-size:.82rem}
-  .minibar{width:52px}
   footer{flex-direction:column;gap:22px}
 }
 @media(max-width:480px){
-  .grid3,.principles{grid-template-columns:1fr}
+  .grid3,.principles,.mech{grid-template-columns:1fr}
   h1{font-size:2rem}
 }
 @media(prefers-reduced-motion:reduce){
@@ -225,11 +206,13 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
 <body>
 
 <nav class="nav">
-  <a href="#top" class="nav-brand"><span>SPRIVÉ.AI</span></a>
+  <a href="#top" class="nav-brand">SPRIVÉ<span class="ac">.AI</span></a>
   <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a href="#approach">Approach</a>
     <a href="#performance">Performance</a>
+    <a href="#crises">Crises</a>
+    <a href="#track">Track Record</a>
     <a href="#engagement">Engagement</a>
     <a href="#contact" class="cta">Contact</a>
   </div>
@@ -237,24 +220,24 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
 
 <section class="hero" id="top">
   <div class="eyebrow">PRIVATE.SPRIVÉ.AI</div>
-  <h1>A systematic equity strategy,<br>privately offered.</h1>
-  <p class="hero-sub">A monthly stock-picking method that buys the S&amp;P 500's strongest year-long performers — known in academic finance as <em>Jegadeesh-Titman 12-1 momentum</em>. Tested across 18 years of market history, including the 2008 financial crisis and the 2009 recovery.</p>
-  <p class="hero-micro">Research only. Not registered investment advice. You trade your own brokerage account.</p>
+  <h1>Same long-term return.<br>Half the drawdown.</h1>
+  <p class="hero-sub">A systematic risk overlay on the S&amp;P 500. The model owns SPY when the trend is intact and steps to cash when a sustained selloff confirms — twelve times in thirty-three years. No stock picking. No discretion. The same index everyone can verify, run through a rules-based regime filter.</p>
+  <p class="hero-micro">Research only. Not registered investment advice in any jurisdiction. You hold and trade in your own brokerage account.</p>
   <div class="hero-stats">
     <div class="hero-stat">
-      <div class="v accent">+34.4%</div>
-      <div class="k">Annualized · 18-year backtest</div>
-      <div class="p">Average return per year in historical testing.</div>
+      <div class="v accent">+11.45%</div>
+      <div class="k">CAGR · 33-year backtest</div>
+      <div class="p">Average annual return, 1993&ndash;2026.</div>
     </div>
     <div class="hero-stat">
-      <div class="v accent">+22.8%</div>
-      <div class="k">Annualized alpha vs S&amp;P 500</div>
-      <div class="p">How much more it earned than just buying the index.</div>
+      <div class="v accent">-27.5%</div>
+      <div class="k">Maximum Drawdown</div>
+      <div class="p">Worst peak-to-trough loss across the full window. SPY: -50.8%.</div>
     </div>
     <div class="hero-stat">
-      <div class="v">0.92</div>
-      <div class="k">Sharpe ratio · 18-year</div>
-      <div class="p">Risk-adjusted return rating (above 0.7 is considered good).</div>
+      <div class="v">0.93</div>
+      <div class="k">Sharpe Ratio</div>
+      <div class="p">Risk-adjusted return. SPY: 0.75. Higher is better.</div>
     </div>
   </div>
 </section>
@@ -262,247 +245,259 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
 <section id="approach" class="reveal">
   <div class="section-head">
     <div class="eyebrow">Approach</div>
-    <h2>Discipline before conviction.</h2>
-    <p class="lede">The strategy is a defined, repeatable process — not a discretionary view on the market. Four principles govern every decision.</p>
+    <h2>Risk management is the only edge.</h2>
+    <p class="lede">Predicting which stocks will rise next month is, by all available evidence, beyond the reach of most active managers. Predicting when a sustained selloff has confirmed — and stepping aside — is not. The strategy commits to the second discipline and abandons the first.</p>
   </div>
   <div class="principles">
     <div class="principle">
       <div class="idx">01</div>
-      <h3>Academic foundation</h3>
-      <p>The selection signal is Jegadeesh-Titman 12-1 momentum — the factor formalized in academic finance since 1993, used by AQR, Robeco, and most institutional momentum portfolios. The ranking is rules-based and survives 30+ years of out-of-sample literature.</p>
+      <h3>No stock picking</h3>
+      <p>The portfolio is either SPY or cash — never individual securities. That removes the entire class of "wrong-stock" risk and means the long-run return is the index return, modified only by when you are in and when you are out.</p>
     </div>
     <div class="principle">
       <div class="idx">02</div>
-      <h3>Evidence over intuition</h3>
-      <p>The strategy was refined in May 2026 after systematic factor backtesting showed three of the five original trend filters were actively reducing return without protecting drawdown. They were removed. The decision was made on evidence, not on conviction.</p>
+      <h3>No survivorship bias</h3>
+      <p>Because the strategy holds the index itself, there is no question of "which companies got included in the test." Every dollar of the backtest could have been earned by every investor with a brokerage account, in every year, on the unadjusted public S&amp;P 500.</p>
     </div>
     <div class="principle">
       <div class="idx">03</div>
-      <h3>Disciplined exit</h3>
-      <p>Positions are held one month and rebalanced on the first Monday. Material thesis breaks — guidance miss, fraud allegation, named-customer loss — trigger an automatic mid-month exit, with the freed allocation held in cash until next rebalance.</p>
+      <h3>Sparse, mechanical signals</h3>
+      <p>The exit and re-entry rules are deterministic. Across thirty-three years and 392 monthly observations, the model traded only twelve times. The cost of being wrong is bounded — you cannot misjudge a trade you do not make.</p>
     </div>
     <div class="principle">
       <div class="idx">04</div>
-      <h3>Transparency as method</h3>
-      <p>Every pick is published. Every losing year — including the −32.4% return in 2008 — is disclosed. A track record is only useful if it cannot be quietly revised after the fact.</p>
+      <h3>Designed for the bad years</h3>
+      <p>The strategy is not built to beat SPY in calm markets — it usually doesn't. It is built to survive 2000-style and 2008-style drawdowns, where index investors lost half their capital and many never psychologically recovered. The historical numbers show that role is exactly what it has fulfilled.</p>
     </div>
   </div>
 
-  <h3 class="dim-head">Selection in two layers</h3>
-  <p class="lede" style="max-width:760px;margin-bottom:28px">
-    The 18-year backtest below measures the <strong style="color:var(--ink)">mechanical signal</strong> alone — Jegadeesh-Titman 12-1 momentum applied to the S&amp;P 500. The live strategy adds a <strong style="color:var(--ink)">qualitative overlay</strong>: each top candidate is researched and scored across six dimensions, with a downside-risk gate excluding capital-loss outliers. The top five by composite score become the month's picks.
-  </p>
-  <table class="tbl">
-    <thead>
-      <tr><th>Dimension</th><th class="r">Weight</th><th>What it measures</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Catalyst proximity &amp; quality</td><td class="r accent">20%</td><td class="muted">Near-term price-moving event — earnings beat, raised guidance, product launch, contract win, regulatory ruling.</td></tr>
-      <tr><td>Revenue growth acceleration</td><td class="r accent">20%</td><td class="muted">Quarter-over-quarter trajectory — whether the growth rate is speeding up, not just whether absolute growth is high.</td></tr>
-      <tr><td>Momentum quality</td><td class="r accent">20%</td><td class="muted">Strength of the 12-1 signal combined with volume confirmation and relative strength versus the S&amp;P 500.</td></tr>
-      <tr><td>Sentiment quality</td><td class="r">15%</td><td class="muted">Broad multi-source check: financial news, analyst tone, earnings calls, social and retail sentiment, institutional commentary.</td></tr>
-      <tr><td>Continuation probability</td><td class="r">15%</td><td class="muted">Is the move sustainable? Sector tailwind, institutional flow, room versus analyst price target, position not over-crowded.</td></tr>
-      <tr><td>Fundamental quality</td><td class="r">10%</td><td class="muted">Margin expansion, Rule of 40 for software, operating cash flow, defensible competitive moat.</td></tr>
-    </tbody>
-  </table>
-  <p class="tbl-note">Score weights are not fixed — they will be re-evaluated against alpha contribution once thirty closed positions have accumulated.</p>
+  <h3 class="dim-head" style="font-size:1.04rem;font-weight:600;margin:54px 0 18px;letter-spacing:-.01em">The mechanism in three layers</h3>
+  <div class="mech">
+    <div class="mech-cell">
+      <div class="lbl">Layer 1 · Denoise</div>
+      <h3>Kalman filter</h3>
+      <p>The monthly SPY adjusted-close price is run through a 2-state Kalman filter (position + velocity) before any signal is computed. This removes the month-to-month noise that would otherwise produce false trade signals.</p>
+    </div>
+    <div class="mech-cell">
+      <div class="lbl">Layer 2 · Trend</div>
+      <h3>9-month SMA</h3>
+      <p>A nine-month simple moving average is computed on the Kalman-filtered price. The nine-month horizon is long enough to ignore corrections, short enough to identify a real regime change before the bottom is in.</p>
+    </div>
+    <div class="mech-cell">
+      <div class="lbl">Layer 3 · Confirm</div>
+      <h3>2σ exit band</h3>
+      <p>The model exits SPY for cash only when the Kalman price closes below the 9-month SMA minus two standard deviations. Re-entry occurs when price reclaims the moving average. The 2σ threshold is what produces twelve trades in thirty-three years instead of two hundred.</p>
+    </div>
+  </div>
+  <p class="tbl-note" style="margin-top:24px">All parameters were specified before backtesting. The 9-month window, 2σ band, and Kalman filter settings (R%=0.1, Q%=0.01) were not optimized against the historical data — they are the published defaults from the trading literature and the underlying open-source library. Curve-fitting would invalidate the test; nothing about the parameter choice was reverse-engineered from the results.</p>
 </section>
 
 <section id="performance" class="reveal">
   <div class="section-head">
-    <div class="eyebrow">Performance — 2008 to 2025 Backtest</div>
-    <h2>Eighteen years,<br>two hundred fourteen rebalance cycles.</h2>
-    <p class="lede">S&amp;P 500 universe. Monthly rebalance, equal weight across five positions. All figures net of 0.15% per-trade commission. The window deliberately includes the 2008 financial crisis, the 2009 momentum crash, and the 2022 bear market — the three regimes most threatening to momentum strategies.</p>
+    <div class="eyebrow">Performance — 1993 to 2026 Backtest</div>
+    <h2>Thirty-three years,<br>three hundred ninety-two monthly observations.</h2>
+    <p class="lede">The full available SPY history (since the ETF's launch in 1993). Monthly bars, dividend-adjusted close. Cash earns the live 3-month US Treasury yield (^IRX), with a 2% APR fallback if absent. Trading costs are 0.15% per switch, applied to the twelve switches over the period.</p>
   </div>
   <div class="grid3">
     <div class="stat">
-      <div class="v accent">+34.4%</div>
-      <div class="k">Annualized Return</div>
-      <div class="p">Average yearly return over the full 18 years.</div>
+      <div class="v accent">+11.45%</div>
+      <div class="k">VolBand CAGR</div>
+      <div class="p">Annualized total return over the full 32.7-year window.</div>
     </div>
     <div class="stat">
-      <div class="v">+11.6%</div>
-      <div class="k">S&amp;P 500 Annualized</div>
-      <div class="p">What you would have earned just holding the index.</div>
+      <div class="v">+10.75%</div>
+      <div class="k">SPY CAGR</div>
+      <div class="p">Buy-and-hold reference. The strategy beat this by +0.70 pp/yr.</div>
     </div>
     <div class="stat">
-      <div class="v accent">+22.8%</div>
-      <div class="k">Annualized Alpha</div>
-      <div class="p">Yearly out-performance versus the index.</div>
+      <div class="v accent">+0.70%</div>
+      <div class="k">CAGR Lift</div>
+      <div class="p">Modest. The strategy's value is risk reduction, not return enhancement.</div>
     </div>
     <div class="stat">
-      <div class="v">0.92</div>
-      <div class="k">Sharpe Ratio</div>
-      <div class="p">Return per unit of risk. Above 0.7 is good; above 1.0 is excellent.</div>
+      <div class="v">0.93</div>
+      <div class="k">VolBand Sharpe</div>
+      <div class="p">Risk-adjusted return. SPY: 0.75.</div>
     </div>
     <div class="stat">
-      <div class="v">1.60</div>
-      <div class="k">Sortino Ratio</div>
-      <div class="p">Like Sharpe but counts only downside risk. Above 1.5 is strong.</div>
+      <div class="v">1.27</div>
+      <div class="k">VolBand Sortino</div>
+      <div class="p">Like Sharpe but counts only downside volatility. SPY: 1.06.</div>
     </div>
     <div class="stat">
-      <div class="v neg">−56.4%</div>
+      <div class="v accent">-27.5%</div>
       <div class="k">Maximum Drawdown</div>
-      <div class="p">Worst peak-to-trough loss in the test window — happened in 2008.</div>
+      <div class="p">SPY: -50.8%. The drawdown has been nearly halved.</div>
     </div>
   </div>
   <div class="callout">
-    <strong>On the −56.4% drawdown</strong>
-    <p>This is the honest 18-year maximum drawdown, driven by the 2008 financial crisis. Momentum strategies hit deep drawdowns in 2008-2009 regardless of filter design — this is a fundamental property of the style, not a flaw in implementation. Sophisticated capital should plan for −30% to −50% drawdowns as realistic, not exceptional. The numbers on this site use a realistic <strong>T+1 execution model</strong> — trades are placed the day after the decision, not at the close of the decision day, since no investor can act on a price they have not yet seen.</p>
+    <strong>The drawdown number is the headline</strong>
+    <p>A −50.8% peak-to-trough loss — which is what SPY did during the 2008 financial crisis — is the kind of event that ends investing careers. Many investors who held SPY through 2007&ndash;2009 sold at the bottom and never reinvested. The VolBand model's −27.5% maximum drawdown is still painful, but it is recoverable. A 46% reduction in worst-case loss is, for most investors, more valuable than a 0.7 pp/yr return advantage. The two combined is rare.</p>
   </div>
 </section>
 
-<section id="stress" class="reveal">
+<section id="crises" class="reveal">
   <div class="section-head">
-    <div class="eyebrow">Stress Windows</div>
-    <h2>Seven crises, eighteen years.</h2>
-    <p class="lede">How the strategy behaved in every major stock-market crisis since 2008. "Return" is the total gain or loss across the window; "dd" is the worst intra-window drop from the period's peak. The most important question for sophisticated capital is not the average year — it is what happens when things go badly.</p>
+    <div class="eyebrow">Behavior in Crises</div>
+    <h2>Seven crises, an honest record.</h2>
+    <p class="lede">Where the strategy earned its keep — and where it did not. The model's value-add is concentrated in long, slow drawdowns where the 9-month trend can confirm a regime change. Fast crashes and shallow corrections are not its native territory; in those it whipsaws or never triggers.</p>
   </div>
+  <div class="tbl-wrap">
   <table class="tbl">
     <thead>
-      <tr><th>Crisis window</th><th class="r">Strategy</th><th class="r">S&amp;P 500</th><th class="r">Verdict</th></tr>
+      <tr><th>Crisis window</th>
+          <th class="r">VolBand return</th><th class="r">SPY return</th>
+          <th class="r">VolBand DD</th><th class="r">SPY DD</th>
+          <th class="r">Verdict</th></tr>
     </thead>
     <tbody>
-      <tr><td>2008 financial crash (Sep 08 → Mar 09)</td><td class="r neg">−50.0%</td><td class="r muted">−34.9%</td><td class="r neg">Strategy fell harder than the index</td></tr>
-      <tr><td>2009 momentum crash (Mar → Jun 09)</td><td class="r accent">+8.1%</td><td class="r muted">+27.3%</td><td class="r muted">Lagged the rally but did not crash</td></tr>
-      <tr><td>2011 European debt crisis (Aug → Oct)</td><td class="r muted">+0.7%</td><td class="r muted">+2.4%</td><td class="r muted">Roughly matched the index</td></tr>
-      <tr><td>2015–16 China devaluation correction</td><td class="r neg">−22.9%</td><td class="r muted">−4.2%</td><td class="r neg">Strategy lost much more than the index</td></tr>
-      <tr><td>2018 Q4 sell-off</td><td class="r neg">−22.3%</td><td class="r muted">−11.4%</td><td class="r neg">Strategy lost twice the index</td></tr>
-      <tr><td>2020 COVID crash (Feb → Apr)</td><td class="r muted">−11.0%</td><td class="r muted">−12.5%</td><td class="r accent">Slightly beat the index</td></tr>
-      <tr><td>2022 bear market (full year)</td><td class="r accent">+3.1%</td><td class="r muted">−19.0%</td><td class="r accent">Strategy delivered absolute gains</td></tr>
+      <tr><td>2000-02 Dot-com bust</td><td class="r accent">-22.9%</td><td class="r muted">-36.5%</td><td class="r accent">-23.1%</td><td class="r muted">-41.6%</td><td class="r accent">Cut dot-com loss by 1/3</td></tr>
+      <tr><td>2008-09 GFC</td><td class="r accent">-9.8%</td><td class="r muted">-47.1%</td><td class="r accent">-10.7%</td><td class="r muted">-50.8%</td><td class="r accent">Dodged the bulk of GFC</td></tr>
+      <tr><td>2011 Euro debt crisis</td><td class="r neg">-16.8%</td><td class="r muted">-7.1%</td><td class="r neg">-16.8%</td><td class="r muted">-16.7%</td><td class="r neg">Lagged SPY by 9.7pp</td></tr>
+      <tr><td>2015-16 China selloff</td><td class="r neg">-9.8%</td><td class="r muted">-1.0%</td><td class="r neg">-9.8%</td><td class="r muted">-6.7%</td><td class="r neg">Lagged SPY by 8.8pp</td></tr>
+      <tr><td>2018 Q4 sell-off</td><td class="r neg">-7.6%</td><td class="r muted">-7.6%</td><td class="r neg">-9.3%</td><td class="r muted">-9.3%</td><td class="r muted">Roughly matched SPY</td></tr>
+      <tr><td>2020 COVID crash</td><td class="r neg">-1.4%</td><td class="r muted">-1.4%</td><td class="r neg">-13.0%</td><td class="r muted">-13.0%</td><td class="r muted">Roughly matched SPY</td></tr>
+      <tr><td>2022 bear market</td><td class="r neg">-15.2%</td><td class="r muted">-13.2%</td><td class="r accent">-16.2%</td><td class="r muted">-20.3%</td><td class="r muted">Roughly matched SPY</td></tr>
     </tbody>
   </table>
-  <p class="tbl-note">Seven windows, two outperformances, two roughly-matched, three underperformances. Concentrated momentum strategies are vulnerable to fast-correction regimes (2008 financial crash, 2015–16, 2018 Q4) where leadership rotates faster than the 12-month signal updates. The honest read: the strategy is not a defensive vehicle. It is an offensive one with deep, recoverable drawdowns.</p>
+  </div>
+  <p class="tbl-note">"Return" is the cumulative gain or loss across the window. "DD" is the worst intra-window peak-to-trough drop. The two crises where the strategy paid for its lifetime keep are the 2000&ndash;02 dot-com bust (DD cut from −42% to −23%) and the 2008&ndash;09 GFC (DD cut from −51% to −11%). These two events alone explain most of the 46% reduction in maximum drawdown shown in the headline. In the four other windows the model either matched SPY or underperformed slightly. The strategy is a tail-risk insurance overlay — not a market-timing edge.</p>
 </section>
 
 <section class="reveal">
   <div class="section-head">
-    <div class="eyebrow">Track Record</div>
-    <h2>Every year, including the losses.</h2>
-    <p class="lede">Eighteen years of annual returns — 2008 to 2025 — shown in full. The "Alpha" column is the strategy's return minus the S&amp;P 500's return for the same year: positive means the strategy beat the index; negative means it lagged. Concealing losing years would compromise the only thing this strategy trades on.</p>
-  </div>
-  <table class="tbl">
-    <thead>
-      <tr><th>Year</th><th class="r">Strategy</th><th class="r">S&amp;P 500</th><th class="r">Alpha</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>2008</td><td class="r neg">−32.4%</td><td class="r muted">−28.6%</td><td class="r neg">−3.8%</td></tr>
-      <tr><td>2009</td><td class="r accent">+28.5%</td><td class="r muted">+24.4%</td><td class="r accent">+4.1%</td></tr>
-      <tr><td>2010</td><td class="r accent">+43.9%</td><td class="r muted">+13.9%</td><td class="r accent">+30.0%</td></tr>
-      <tr><td>2011</td><td class="r neg">−16.4%</td><td class="r muted">+2.5%</td><td class="r neg">−18.9%</td></tr>
-      <tr><td>2012</td><td class="r accent">+55.6%</td><td class="r muted">+16.7%</td><td class="r accent">+38.9%</td></tr>
-      <tr><td>2013</td><td class="r accent">+28.0%</td><td class="r muted">+28.6%</td><td class="r muted">−0.6%</td></tr>
-      <tr><td>2014</td><td class="r accent">+23.8%</td><td class="r muted">+11.0%</td><td class="r accent">+12.7%</td></tr>
-      <tr><td>2015</td><td class="r muted">+5.1%</td><td class="r muted">+2.9%</td><td class="r accent">+2.3%</td></tr>
-      <tr><td>2016</td><td class="r accent">+14.3%</td><td class="r muted">+14.3%</td><td class="r muted">+0.1%</td></tr>
-      <tr><td>2017</td><td class="r accent">+22.5%</td><td class="r muted">+21.6%</td><td class="r muted">+0.9%</td></tr>
-      <tr><td>2018</td><td class="r accent">+18.0%</td><td class="r muted">−2.7%</td><td class="r accent">+20.7%</td></tr>
-      <tr><td>2019</td><td class="r accent">+30.2%</td><td class="r muted">+28.1%</td><td class="r muted">+2.1%</td></tr>
-      <tr><td>2020</td><td class="r accent">+100.9%</td><td class="r muted">+17.2%</td><td class="r accent">+83.7%</td></tr>
-      <tr><td>2021</td><td class="r accent">+24.7%</td><td class="r muted">+30.3%</td><td class="r neg">−5.6%</td></tr>
-      <tr><td>2022</td><td class="r accent">+3.1%</td><td class="r muted">−19.0%</td><td class="r accent">+22.1%</td></tr>
-      <tr><td>2023</td><td class="r accent">+61.7%</td><td class="r muted">+26.0%</td><td class="r accent">+35.7%</td></tr>
-      <tr><td>2024</td><td class="r accent">+266.0%</td><td class="r muted">+26.1%</td><td class="r accent">+239.8%</td></tr>
-      <tr><td>2025</td><td class="r accent">+117.6%</td><td class="r muted">+16.8%</td><td class="r accent">+100.8%</td></tr>
-    </tbody>
-  </table>
-  <p class="tbl-note">The +62%, +266%, +118% returns in 2023–2025 reflect an in-sample, regime-favorable window with heavy survivorship-bias inflation — discount them. The 18-year average of +34%/yr is more representative; the realistic forward expectation is detailed in Risk Disclosure below.</p>
-</section>
-
-<section class="reveal">
-  <div class="section-head">
-    <div class="eyebrow">Accumulation — 2008 to 2025</div>
+    <div class="eyebrow">Accumulation — 1993 to 2026</div>
     <h2>The compounding profile.</h2>
-    <p class="lede">A $1,000 opening position with $433 added each month across the full 18-year window — one deposit per rebalance, no idle cash, net of trading costs. Log scale because the y-axis spans four decades; on a linear scale the early years would be invisible.</p>
+    <p class="lede">A $1,000 monthly contribution from November 1993 through June 2026 — total deposit $392,000. The chart below shows what both portfolios would have grown to. Log scale because the y-axis spans four decades; on a linear scale the early years would be invisible.</p>
   </div>
   <div class="panel">
-    <svg viewBox="0 0 1120 440" class="dca-svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Monthly DCA value (log scale): strategy vs S&amp;P 500, 2008-2025"><defs><linearGradient id="chArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d7bfd" stop-opacity="0.30"/><stop offset="1" stop-color="#3d7bfd" stop-opacity="0"/></linearGradient></defs><line x1="78" y1="394.0" x2="1100" y2="394.0" class="ch-grid"/><text x="68" y="398.0" class="ch-ylab">$1k</text><line x1="78" y1="308.9" x2="1100" y2="308.9" class="ch-grid"/><text x="68" y="312.9" class="ch-ylab">$10k</text><line x1="78" y1="223.8" x2="1100" y2="223.8" class="ch-grid"/><text x="68" y="227.8" class="ch-ylab">$100k</text><line x1="78" y1="138.7" x2="1100" y2="138.7" class="ch-grid"/><text x="68" y="142.7" class="ch-ylab">$1M</text><line x1="78" y1="53.6" x2="1100" y2="53.6" class="ch-grid"/><text x="68" y="57.6" class="ch-ylab">$10M</text><text x="130.8" y="418" class="ch-xlab">2009</text><text x="188.4" y="418" class="ch-xlab">2010</text><text x="245.9" y="418" class="ch-xlab">2011</text><text x="303.5" y="418" class="ch-xlab">2012</text><text x="361.1" y="418" class="ch-xlab">2013</text><text x="418.7" y="418" class="ch-xlab">2014</text><text x="476.2" y="418" class="ch-xlab">2015</text><text x="533.8" y="418" class="ch-xlab">2016</text><text x="591.4" y="418" class="ch-xlab">2017</text><text x="649.0" y="418" class="ch-xlab">2018</text><text x="706.6" y="418" class="ch-xlab">2019</text><text x="764.1" y="418" class="ch-xlab">2020</text><text x="821.7" y="418" class="ch-xlab">2021</text><text x="879.3" y="418" class="ch-xlab">2022</text><text x="936.9" y="418" class="ch-xlab">2023</text><text x="994.4" y="418" class="ch-xlab">2024</text><text x="1052.0" y="418" class="ch-xlab">2025</text><polygon points="78.0,394.0 78.0,378.5 82.8,362.6 87.6,356.1 92.4,351.5 97.2,348.5 102.0,345.0 106.8,341.9 111.6,362.2 116.4,349.2 121.2,349.0 126.0,342.2 130.8,341.9 135.6,341.9 140.4,337.5 145.2,331.0 150.0,326.9 154.8,326.6 159.6,320.9 164.4,318.6 169.2,315.7 174.0,313.6 178.8,308.9 183.6,301.2 188.4,302.3 193.2,298.6 198.0,289.5 202.8,289.2 207.5,291.7 212.3,294.1 217.1,287.2 221.9,285.3 226.7,280.0 231.5,277.4 236.3,276.0 241.1,276.3 245.9,275.5 250.7,277.7 255.5,274.2 260.3,274.6 265.1,276.5 269.9,271.9 274.7,276.9 279.5,278.2 284.3,280.9 289.1,274.5 293.9,275.4 298.7,275.1 303.5,267.1 308.3,265.7 313.1,261.7 317.9,261.3 322.7,261.0 327.5,260.9 332.3,259.7 337.1,258.1 341.9,256.9 346.7,256.8 351.5,257.6 356.3,253.4 361.1,251.4 365.9,248.3 370.7,249.9 375.5,248.5 380.3,248.7 385.1,251.3 389.9,248.1 394.7,246.5 399.5,242.6 404.3,240.0 409.1,240.1 413.9,240.6 418.7,238.5 423.5,232.1 428.3,239.3 433.1,239.8 437.9,242.2 442.7,239.8 447.5,239.3 452.3,235.1 457.1,237.7 461.8,233.9 466.6,230.5 471.4,229.9 476.2,226.6 481.0,222.2 485.8,221.7 490.6,222.8 495.4,219.7 500.2,218.3 505.0,220.5 509.8,222.9 514.6,225.0 519.4,223.8 524.2,222.1 529.0,226.2 533.8,232.7 538.6,228.9 543.4,226.7 548.2,227.7 553.0,226.7 557.8,225.2 562.6,222.8 567.4,223.3 572.2,225.4 577.0,224.7 581.8,221.6 586.6,219.2 591.4,217.8 596.2,218.7 601.0,217.4 605.8,221.4 610.6,215.8 615.4,215.5 620.2,214.0 625.0,212.3 629.8,210.3 634.6,207.5 639.4,211.3 644.2,210.2 649.0,207.7 653.8,205.4 658.6,208.5 663.4,206.2 668.2,203.9 673.0,201.3 677.8,199.4 682.6,193.2 687.4,193.9 692.2,199.8 697.0,203.1 701.8,203.0 706.6,199.7 711.4,195.2 716.2,192.0 720.9,190.5 725.7,190.7 730.5,187.7 735.3,188.6 740.1,188.8 744.9,193.1 749.7,194.9 754.5,194.8 759.3,192.4 764.1,191.6 768.9,195.3 773.7,203.2 778.5,195.6 783.3,194.3 788.1,188.8 792.9,185.0 797.7,186.2 802.5,180.8 807.3,182.8 812.1,165.1 816.9,165.8 821.7,160.8 826.5,162.3 831.3,165.7 836.1,164.4 840.9,165.2 845.7,165.9 850.5,161.1 855.3,159.7 860.1,158.1 864.9,154.9 869.7,156.7 874.5,157.3 879.3,162.4 884.1,163.2 888.9,157.7 893.7,156.4 898.5,152.3 903.3,162.0 908.1,156.3 912.9,153.6 917.7,153.3 922.5,150.2 927.3,154.5 932.1,155.9 936.9,154.2 941.7,151.3 946.5,152.9 951.3,154.5 956.1,143.9 960.9,143.5 965.7,136.9 970.5,139.7 975.2,143.3 980.0,141.9 984.8,141.3 989.6,137.9 994.4,124.0 999.2,111.7 1004.0,109.3 1008.8,106.2 1013.6,106.7 1018.4,104.5 1023.2,111.6 1028.0,110.7 1032.8,101.5 1037.6,99.1 1042.4,88.2 1047.2,89.8 1052.0,81.5 1056.8,88.5 1061.6,96.7 1066.4,84.3 1071.2,74.4 1076.0,72.4 1080.8,67.3 1085.6,66.8 1090.4,59.5 1095.2,60.7 1100.0,61.1 1100.0,394.0" fill="url(#chArea)"/><polyline points="78.0,380.7 82.8,370.9 87.6,363.2 92.4,356.8 97.2,351.4 102.0,346.7 106.8,342.5 111.6,338.7 116.4,335.3 121.2,332.1 126.0,329.2 130.8,326.6 135.6,324.1 140.4,321.7 145.2,319.5 150.0,317.5 154.8,315.5 159.6,313.6 164.4,311.9 169.2,310.2 174.0,308.5 178.8,307.0 183.6,305.5 188.4,304.1 193.2,302.7 198.0,301.4 202.8,300.1 207.5,298.8 212.3,297.6 217.1,296.5 221.9,295.3 226.7,294.2 231.5,293.2 236.3,292.2 241.1,291.2 245.9,290.2 250.7,289.2 255.5,288.3 260.3,287.4 265.1,286.5 269.9,285.6 274.7,284.8 279.5,284.0 284.3,283.2 289.1,282.4 293.9,281.6 298.7,280.8 303.5,280.1 308.3,279.4 313.1,278.7 317.9,278.0 322.7,277.3 327.5,276.6 332.3,275.9 337.1,275.3 341.9,274.6 346.7,274.0 351.5,273.4 356.3,272.8 361.1,272.2 365.9,271.6 370.7,271.0 375.5,270.5 380.3,269.9 385.1,269.3 389.9,268.8 394.7,268.3 399.5,267.7 404.3,267.2 409.1,266.7 413.9,266.2 418.7,265.7 423.5,265.2 428.3,264.7 433.1,264.2 437.9,263.7 442.7,263.3 447.5,262.8 452.3,262.4 457.1,261.9 461.8,261.5 466.6,261.0 471.4,260.6 476.2,260.2 481.0,259.7 485.8,259.3 490.6,258.9 495.4,258.5 500.2,258.1 505.0,257.7 509.8,257.3 514.6,256.9 519.4,256.5 524.2,256.1 529.0,255.7 533.8,255.3 538.6,255.0 543.4,254.6 548.2,254.2 553.0,253.9 557.8,253.5 562.6,253.2 567.4,252.8 572.2,252.5 577.0,252.1 581.8,251.8 586.6,251.4 591.4,251.1 596.2,250.8 601.0,250.4 605.8,250.1 610.6,249.8 615.4,249.4 620.2,249.1 625.0,248.8 629.8,248.5 634.6,248.2 639.4,247.9 644.2,247.6 649.0,247.3 653.8,247.0 658.6,246.7 663.4,246.4 668.2,246.1 673.0,245.8 677.8,245.5 682.6,245.2 687.4,244.9 692.2,244.6 697.0,244.4 701.8,244.1 706.6,243.8 711.4,243.5 716.2,243.3 720.9,243.0 725.7,242.7 730.5,242.5 735.3,242.2 740.1,241.9 744.9,241.7 749.7,241.4 754.5,241.2 759.3,240.9 764.1,240.6 768.9,240.4 773.7,240.1 778.5,239.9 783.3,239.7 788.1,239.4 792.9,239.2 797.7,238.9 802.5,238.7 807.3,238.4 812.1,238.2 816.9,238.0 821.7,237.7 826.5,237.5 831.3,237.3 836.1,237.0 840.9,236.8 845.7,236.6 850.5,236.4 855.3,236.1 860.1,235.9 864.9,235.7 869.7,235.5 874.5,235.3 879.3,235.0 884.1,234.8 888.9,234.6 893.7,234.4 898.5,234.2 903.3,234.0 908.1,233.8 912.9,233.5 917.7,233.3 922.5,233.1 927.3,232.9 932.1,232.7 936.9,232.5 941.7,232.3 946.5,232.1 951.3,231.9 956.1,231.7 960.9,231.5 965.7,231.3 970.5,231.1 975.2,230.9 980.0,230.7 984.8,230.5 989.6,230.4 994.4,230.2 999.2,230.0 1004.0,229.8 1008.8,229.6 1013.6,229.4 1018.4,229.2 1023.2,229.0 1028.0,228.9 1032.8,228.7 1037.6,228.5 1042.4,228.3 1047.2,228.1 1052.0,227.9 1056.8,227.8 1061.6,227.6 1066.4,227.4 1071.2,227.2 1076.0,227.1 1080.8,226.9 1085.6,226.7 1090.4,226.5 1095.2,226.4 1100.0,226.2" class="ch-invested"/><polyline points="78.0,381.0 82.8,369.9 87.6,361.0 92.4,356.0 97.2,353.5 102.0,348.2 106.8,344.0 111.6,348.9 116.4,344.3 121.2,346.4 126.0,338.6 130.8,339.2 135.6,342.3 140.4,332.6 145.2,325.9 150.0,321.7 154.8,322.1 159.6,314.9 164.4,312.2 169.2,309.4 174.0,308.2 178.8,304.9 183.6,302.0 188.4,301.7 193.2,299.8 198.0,296.3 202.8,295.6 207.5,298.1 212.3,298.1 217.1,293.7 221.9,293.5 226.7,290.2 231.5,288.1 236.3,286.2 241.1,283.9 245.9,281.5 250.7,280.8 255.5,279.7 260.3,278.3 265.1,279.5 269.9,277.2 274.7,278.9 279.5,280.8 284.3,281.4 289.1,275.8 293.9,275.7 298.7,274.4 303.5,271.7 308.3,271.2 313.1,268.7 317.9,269.4 322.7,270.9 327.5,267.9 332.3,266.6 337.1,265.9 341.9,264.3 346.7,264.2 351.5,264.2 356.3,262.3 361.1,260.5 365.9,259.3 370.7,258.1 375.5,256.4 380.3,255.8 385.1,255.7 389.9,253.5 394.7,254.3 399.5,253.5 404.3,250.8 409.1,249.8 413.9,248.5 418.7,249.8 423.5,247.0 428.3,247.1 433.1,246.4 437.9,245.0 442.7,243.8 447.5,244.4 452.3,242.5 457.1,243.4 461.8,241.7 466.6,240.3 471.4,241.2 476.2,240.0 481.0,238.7 485.8,238.9 490.6,238.4 495.4,237.7 500.2,237.9 505.0,237.4 509.8,239.4 514.6,238.9 519.4,236.3 524.2,236.7 529.0,237.3 533.8,239.2 538.6,237.4 543.4,235.9 548.2,235.3 553.0,234.1 557.8,234.3 562.6,232.8 567.4,232.1 572.2,232.4 577.0,232.3 581.8,230.8 586.6,229.8 591.4,229.0 596.2,227.6 601.0,227.5 605.8,226.8 610.6,225.9 615.4,225.6 620.2,224.8 625.0,224.8 629.8,223.5 634.6,222.5 639.4,221.7 644.2,220.6 649.0,220.4 653.8,219.7 658.6,221.1 663.4,220.1 668.2,218.8 673.0,219.1 677.8,217.0 682.6,216.3 687.4,215.8 692.2,217.8 697.0,218.3 701.8,219.9 706.6,217.4 711.4,216.5 716.2,215.3 720.9,214.9 725.7,215.8 730.5,213.4 735.3,214.4 740.1,213.9 744.9,213.9 749.7,211.5 754.5,211.1 759.3,209.2 764.1,208.4 768.9,211.7 773.7,215.9 778.5,213.0 783.3,210.1 788.1,209.2 792.9,207.2 797.7,206.8 802.5,206.3 807.3,206.1 812.1,202.4 816.9,202.1 821.7,201.0 826.5,200.4 831.3,198.4 836.1,197.4 840.9,196.8 845.7,195.7 850.5,194.9 855.3,194.0 860.1,195.3 864.9,192.8 869.7,192.3 874.5,191.4 879.3,193.4 884.1,196.3 888.9,193.1 893.7,196.0 898.5,196.0 903.3,198.9 908.1,196.4 912.9,197.9 917.7,198.9 922.5,198.4 927.3,197.2 932.1,198.2 936.9,194.9 941.7,196.4 946.5,195.2 951.3,195.0 956.1,193.4 960.9,191.9 965.7,191.4 970.5,191.2 975.2,193.4 980.0,192.0 984.8,190.3 989.6,188.8 994.4,187.1 999.2,186.1 1004.0,185.1 1008.8,185.1 1013.6,184.3 1018.4,182.7 1023.2,184.5 1028.0,182.4 1032.8,180.8 1037.6,180.6 1042.4,178.8 1047.2,179.6 1052.0,178.7 1056.8,180.2 1061.6,185.6 1066.4,181.2 1071.2,178.8 1076.0,177.1 1080.8,176.6 1085.6,175.9 1090.4,174.1 1095.2,173.7 1100.0,173.3" class="ch-spy"/><polyline points="78.0,378.5 82.8,362.6 87.6,356.1 92.4,351.5 97.2,348.5 102.0,345.0 106.8,341.9 111.6,362.2 116.4,349.2 121.2,349.0 126.0,342.2 130.8,341.9 135.6,341.9 140.4,337.5 145.2,331.0 150.0,326.9 154.8,326.6 159.6,320.9 164.4,318.6 169.2,315.7 174.0,313.6 178.8,308.9 183.6,301.2 188.4,302.3 193.2,298.6 198.0,289.5 202.8,289.2 207.5,291.7 212.3,294.1 217.1,287.2 221.9,285.3 226.7,280.0 231.5,277.4 236.3,276.0 241.1,276.3 245.9,275.5 250.7,277.7 255.5,274.2 260.3,274.6 265.1,276.5 269.9,271.9 274.7,276.9 279.5,278.2 284.3,280.9 289.1,274.5 293.9,275.4 298.7,275.1 303.5,267.1 308.3,265.7 313.1,261.7 317.9,261.3 322.7,261.0 327.5,260.9 332.3,259.7 337.1,258.1 341.9,256.9 346.7,256.8 351.5,257.6 356.3,253.4 361.1,251.4 365.9,248.3 370.7,249.9 375.5,248.5 380.3,248.7 385.1,251.3 389.9,248.1 394.7,246.5 399.5,242.6 404.3,240.0 409.1,240.1 413.9,240.6 418.7,238.5 423.5,232.1 428.3,239.3 433.1,239.8 437.9,242.2 442.7,239.8 447.5,239.3 452.3,235.1 457.1,237.7 461.8,233.9 466.6,230.5 471.4,229.9 476.2,226.6 481.0,222.2 485.8,221.7 490.6,222.8 495.4,219.7 500.2,218.3 505.0,220.5 509.8,222.9 514.6,225.0 519.4,223.8 524.2,222.1 529.0,226.2 533.8,232.7 538.6,228.9 543.4,226.7 548.2,227.7 553.0,226.7 557.8,225.2 562.6,222.8 567.4,223.3 572.2,225.4 577.0,224.7 581.8,221.6 586.6,219.2 591.4,217.8 596.2,218.7 601.0,217.4 605.8,221.4 610.6,215.8 615.4,215.5 620.2,214.0 625.0,212.3 629.8,210.3 634.6,207.5 639.4,211.3 644.2,210.2 649.0,207.7 653.8,205.4 658.6,208.5 663.4,206.2 668.2,203.9 673.0,201.3 677.8,199.4 682.6,193.2 687.4,193.9 692.2,199.8 697.0,203.1 701.8,203.0 706.6,199.7 711.4,195.2 716.2,192.0 720.9,190.5 725.7,190.7 730.5,187.7 735.3,188.6 740.1,188.8 744.9,193.1 749.7,194.9 754.5,194.8 759.3,192.4 764.1,191.6 768.9,195.3 773.7,203.2 778.5,195.6 783.3,194.3 788.1,188.8 792.9,185.0 797.7,186.2 802.5,180.8 807.3,182.8 812.1,165.1 816.9,165.8 821.7,160.8 826.5,162.3 831.3,165.7 836.1,164.4 840.9,165.2 845.7,165.9 850.5,161.1 855.3,159.7 860.1,158.1 864.9,154.9 869.7,156.7 874.5,157.3 879.3,162.4 884.1,163.2 888.9,157.7 893.7,156.4 898.5,152.3 903.3,162.0 908.1,156.3 912.9,153.6 917.7,153.3 922.5,150.2 927.3,154.5 932.1,155.9 936.9,154.2 941.7,151.3 946.5,152.9 951.3,154.5 956.1,143.9 960.9,143.5 965.7,136.9 970.5,139.7 975.2,143.3 980.0,141.9 984.8,141.3 989.6,137.9 994.4,124.0 999.2,111.7 1004.0,109.3 1008.8,106.2 1013.6,106.7 1018.4,104.5 1023.2,111.6 1028.0,110.7 1032.8,101.5 1037.6,99.1 1042.4,88.2 1047.2,89.8 1052.0,81.5 1056.8,88.5 1061.6,96.7 1066.4,84.3 1071.2,74.4 1076.0,72.4 1080.8,67.3 1085.6,66.8 1090.4,59.5 1095.2,60.7 1100.0,61.1" class="ch-strat"/><circle cx="1100.0" cy="173.3" r="3.6" class="ch-dot-spy"/><circle cx="1100.0" cy="61.1" r="4.2" class="ch-dot-strat"/></svg>
+    <svg viewBox="0 0 1120 440" class="dca-svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Monthly DCA value (log scale): VolBand vs S&amp;P 500, 1993-2026"><defs><linearGradient id="chArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d7bfd" stop-opacity="0.30"/><stop offset="1" stop-color="#3d7bfd" stop-opacity="0"/></linearGradient></defs><line x1="78" y1="394.0" x2="1100" y2="394.0" class="ch-grid"/><text x="68" y="398.0" class="ch-ylab">$1k</text><line x1="78" y1="302.5" x2="1100" y2="302.5" class="ch-grid"/><text x="68" y="306.5" class="ch-ylab">$10k</text><line x1="78" y1="211.0" x2="1100" y2="211.0" class="ch-grid"/><text x="68" y="215.0" class="ch-ylab">$100k</text><line x1="78" y1="119.5" x2="1100" y2="119.5" class="ch-grid"/><text x="68" y="123.5" class="ch-ylab">$1M</text><line x1="78" y1="28.0" x2="1100" y2="28.0" class="ch-grid"/><text x="68" y="32.0" class="ch-ylab">$10M</text><text x="114.6" y="418" class="ch-xlab">1995</text><text x="271.4" y="418" class="ch-xlab">2000</text><text x="428.3" y="418" class="ch-xlab">2005</text><text x="585.1" y="418" class="ch-xlab">2010</text><text x="741.9" y="418" class="ch-xlab">2015</text><text x="898.7" y="418" class="ch-xlab">2020</text><text x="1055.6" y="418" class="ch-xlab">2025</text><polygon points="78.0,394.0 78.0,394.0 80.6,366.3 83.2,349.2 85.8,338.9 88.5,331.6 91.1,323.5 93.7,316.8 96.3,312.5 98.9,306.3 101.5,300.8 104.1,298.3 106.8,293.7 109.4,292.1 112.0,289.2 114.6,284.9 117.2,280.9 119.8,277.9 122.4,274.5 125.0,271.1 127.7,268.8 130.3,265.7 132.9,264.0 135.5,261.1 138.1,259.6 140.7,256.6 143.3,255.0 146.0,252.3 148.6,251.0 151.2,249.5 153.8,247.8 156.4,246.0 159.0,244.9 161.6,245.6 164.3,243.9 166.9,241.1 169.5,238.8 172.1,235.3 174.7,235.7 177.3,232.4 179.9,231.4 182.6,232.6 185.2,229.4 187.8,226.4 190.4,224.4 193.0,220.7 195.6,222.3 198.2,220.0 200.8,220.4 203.5,218.4 206.1,217.3 208.7,216.2 211.3,213.1 213.9,210.9 216.5,209.9 219.1,210.4 221.8,208.5 224.4,208.5 227.0,214.1 229.6,211.4 232.2,207.8 234.8,205.3 237.4,202.6 240.1,200.8 242.7,201.8 245.3,199.9 247.9,198.1 250.5,198.7 253.1,196.4 255.7,197.2 258.4,197.2 261.0,197.9 263.6,195.0 266.2,194.1 268.8,191.8 271.4,193.4 274.0,193.8 276.6,190.0 279.3,191.1 281.9,191.5 284.5,190.5 287.1,190.8 289.7,188.1 292.3,190.2 294.9,190.0 297.6,192.9 300.2,192.5 302.8,192.1 305.4,191.7 308.0,191.3 310.6,190.9 313.2,190.6 315.9,190.2 318.5,189.9 321.1,189.5 323.7,189.2 326.3,188.9 328.9,188.7 331.5,188.4 334.2,188.1 336.8,187.8 339.4,187.5 342.0,189.6 344.6,189.6 347.2,192.6 349.8,195.4 352.5,195.2 355.1,194.9 357.7,194.5 360.3,194.2 362.9,193.9 365.5,193.6 368.1,193.3 370.7,193.1 373.4,192.8 376.0,190.5 378.6,190.0 381.2,188.9 383.8,187.8 386.4,188.2 389.0,185.8 391.7,185.1 394.3,183.2 396.9,182.0 399.5,181.3 402.1,181.8 404.7,182.2 407.3,181.3 410.0,180.6 412.6,181.5 415.2,181.2 417.8,180.8 420.4,180.0 423.0,178.2 425.6,176.9 428.3,177.4 430.9,176.5 433.5,177.2 436.1,177.6 438.7,176.2 441.3,176.1 443.9,174.3 446.5,174.5 449.2,174.2 451.8,174.8 454.4,173.0 457.0,173.1 459.6,171.8 462.2,171.4 464.8,170.8 467.5,170.0 470.1,171.1 472.7,171.0 475.3,170.5 477.9,169.5 480.5,168.5 483.1,166.9 485.8,166.0 488.4,165.6 491.0,164.6 493.6,165.3 496.2,164.9 498.8,162.9 501.4,161.4 504.1,162.1 506.7,163.1 509.3,162.4 511.9,161.0 514.5,160.2 517.1,161.6 519.7,162.2 522.3,164.3 525.0,164.2 527.6,164.0 530.2,163.9 532.8,163.7 535.4,163.5 538.0,163.3 540.6,163.1 543.3,163.0 545.9,162.9 548.5,162.7 551.1,162.6 553.7,162.5 556.3,162.4 558.9,162.3 561.6,162.1 564.2,162.0 566.8,161.9 569.4,158.8 572.0,157.2 574.6,155.9 577.2,156.4 579.9,153.9 582.5,153.3 585.1,154.5 587.7,153.1 590.3,150.9 592.9,150.0 595.5,153.2 598.1,155.4 600.8,152.5 603.4,154.2 606.0,151.0 608.6,149.2 611.2,149.1 613.8,146.6 616.4,145.4 619.1,144.0 621.7,144.1 624.3,142.7 626.9,143.1 629.5,143.9 632.1,144.4 634.7,146.6 637.4,149.6 640.0,149.6 642.6,149.5 645.2,149.4 647.8,149.3 650.4,147.6 653.0,146.4 655.7,146.4 658.3,148.8 660.9,147.4 663.5,146.6 666.1,145.6 668.7,144.7 671.3,145.1 673.9,144.8 676.6,144.7 679.2,142.4 681.8,141.8 684.4,140.4 687.0,139.4 689.6,138.4 692.2,139.1 694.9,136.8 697.5,138.0 700.1,136.9 702.7,134.8 705.3,133.6 707.9,132.7 710.5,133.9 713.2,132.1 715.8,131.9 718.4,131.4 721.0,130.4 723.6,129.7 726.2,130.0 728.8,128.4 731.5,129.1 734.1,128.0 736.7,126.8 739.3,127.1 741.9,128.0 744.5,125.8 747.1,126.6 749.7,126.0 752.4,125.4 755.0,126.4 757.6,125.2 760.2,127.7 762.8,128.9 765.4,128.9 768.0,128.8 770.7,129.8 773.3,131.5 775.9,131.5 778.5,129.0 781.1,128.6 783.7,127.9 786.3,127.9 789.0,126.3 791.6,126.2 794.2,126.3 796.8,126.8 799.4,125.3 802.0,124.7 804.6,123.7 807.3,122.1 809.9,122.2 812.5,121.6 815.1,121.0 817.7,120.9 820.3,119.8 822.9,119.7 825.5,119.1 828.2,117.9 830.8,116.7 833.4,116.3 836.0,113.9 838.6,115.4 841.2,116.6 843.8,116.2 846.5,115.2 849.1,115.1 851.7,113.5 854.3,112.2 856.9,112.1 859.5,114.7 862.1,114.0 864.8,117.8 867.4,114.5 870.0,113.2 872.6,112.6 875.2,110.8 877.8,113.4 880.4,110.9 883.1,110.1 885.7,110.7 888.3,110.1 890.9,109.0 893.5,107.6 896.1,106.6 898.7,106.4 901.4,109.6 904.0,115.1 906.6,110.1 909.2,108.2 911.8,107.7 914.4,105.2 917.0,102.5 919.6,104.1 922.3,105.0 924.9,100.8 927.5,99.5 930.1,99.7 932.7,98.6 935.3,97.0 937.9,94.8 940.6,94.5 943.2,93.7 945.8,92.6 948.4,91.4 951.0,93.4 953.6,90.6 956.2,90.9 958.9,89.2 961.5,91.2 964.1,92.4 966.7,91.0 969.3,94.5 971.9,94.4 974.5,98.0 977.2,97.9 979.8,97.8 982.4,97.7 985.0,97.5 987.6,97.4 990.2,97.2 992.8,97.0 995.4,98.1 998.1,96.8 1000.7,96.0 1003.3,95.8 1005.9,93.4 1008.5,92.0 1011.1,92.6 1013.7,94.6 1016.4,95.3 1019.0,91.9 1021.6,90.2 1024.2,89.4 1026.8,87.4 1029.4,86.2 1032.0,87.7 1034.7,85.7 1037.3,84.4 1039.9,83.8 1042.5,82.9 1045.1,82.2 1047.7,82.4 1050.3,80.1 1053.0,81.2 1055.6,80.0 1058.2,80.5 1060.8,82.8 1063.4,83.0 1066.0,80.6 1068.6,78.7 1071.2,77.7 1073.9,76.9 1076.5,75.6 1079.1,74.5 1081.7,74.4 1084.3,74.5 1086.9,73.8 1089.5,74.1 1092.2,76.2 1094.8,72.1 1097.4,70.1 1100.0,71.1 1100.0,394.0" fill="url(#chArea)"/><polyline points="78.0,394.0 80.6,366.5 83.2,350.3 85.8,338.9 88.5,330.0 91.1,322.8 93.7,316.7 96.3,311.4 98.9,306.7 101.5,302.5 104.1,298.7 106.8,295.3 109.4,292.1 112.0,289.1 114.6,286.4 117.2,283.8 119.8,281.4 122.4,279.1 125.0,277.0 127.7,275.0 130.3,273.0 132.9,271.2 135.5,269.4 138.1,267.7 140.7,266.1 143.3,264.5 146.0,263.0 148.6,261.6 151.2,260.2 153.8,258.8 156.4,257.5 159.0,256.3 161.6,255.1 164.3,253.9 166.9,252.7 169.5,251.6 172.1,250.5 174.7,249.4 177.3,248.4 179.9,247.4 182.6,246.4 185.2,245.5 187.8,244.5 190.4,243.6 193.0,242.7 195.6,241.9 198.2,241.0 200.8,240.2 203.5,239.3 206.1,238.5 208.7,237.8 211.3,237.0 213.9,236.2 216.5,235.5 219.1,234.8 221.8,234.0 224.4,233.3 227.0,232.6 229.6,232.0 232.2,231.3 234.8,230.6 237.4,230.0 240.1,229.4 242.7,228.7 245.3,228.1 247.9,227.5 250.5,226.9 253.1,226.3 255.7,225.7 258.4,225.2 261.0,224.6 263.6,224.1 266.2,223.5 268.8,223.0 271.4,222.4 274.0,221.9 276.6,221.4 279.3,220.9 281.9,220.4 284.5,219.9 287.1,219.4 289.7,218.9 292.3,218.4 294.9,217.9 297.6,217.5 300.2,217.0 302.8,216.5 305.4,216.1 308.0,215.6 310.6,215.2 313.2,214.7 315.9,214.3 318.5,213.9 321.1,213.5 323.7,213.0 326.3,212.6 328.9,212.2 331.5,211.8 334.2,211.4 336.8,211.0 339.4,210.6 342.0,210.2 344.6,209.8 347.2,209.4 349.8,209.1 352.5,208.7 355.1,208.3 357.7,207.9 360.3,207.6 362.9,207.2 365.5,206.9 368.1,206.5 370.7,206.1 373.4,205.8 376.0,205.4 378.6,205.1 381.2,204.8 383.8,204.4 386.4,204.1 389.0,203.8 391.7,203.4 394.3,203.1 396.9,202.8 399.5,202.5 402.1,202.1 404.7,201.8 407.3,201.5 410.0,201.2 412.6,200.9 415.2,200.6 417.8,200.3 420.4,200.0 423.0,199.7 425.6,199.4 428.3,199.1 430.9,198.8 433.5,198.5 436.1,198.2 438.7,197.9 441.3,197.6 443.9,197.3 446.5,197.1 449.2,196.8 451.8,196.5 454.4,196.2 457.0,196.0 459.6,195.7 462.2,195.4 464.8,195.2 467.5,194.9 470.1,194.6 472.7,194.4 475.3,194.1 477.9,193.8 480.5,193.6 483.1,193.3 485.8,193.1 488.4,192.8 491.0,192.6 493.6,192.3 496.2,192.1 498.8,191.8 501.4,191.6 504.1,191.3 506.7,191.1 509.3,190.9 511.9,190.6 514.5,190.4 517.1,190.1 519.7,189.9 522.3,189.7 525.0,189.4 527.6,189.2 530.2,189.0 532.8,188.8 535.4,188.5 538.0,188.3 540.6,188.1 543.3,187.9 545.9,187.6 548.5,187.4 551.1,187.2 553.7,187.0 556.3,186.8 558.9,186.6 561.6,186.3 564.2,186.1 566.8,185.9 569.4,185.7 572.0,185.5 574.6,185.3 577.2,185.1 579.9,184.9 582.5,184.7 585.1,184.5 587.7,184.3 590.3,184.1 592.9,183.9 595.5,183.7 598.1,183.5 600.8,183.3 603.4,183.1 606.0,182.9 608.6,182.7 611.2,182.5 613.8,182.3 616.4,182.1 619.1,181.9 621.7,181.7 624.3,181.5 626.9,181.3 629.5,181.1 632.1,181.0 634.7,180.8 637.4,180.6 640.0,180.4 642.6,180.2 645.2,180.0 647.8,179.8 650.4,179.7 653.0,179.5 655.7,179.3 658.3,179.1 660.9,179.0 663.5,178.8 666.1,178.6 668.7,178.4 671.3,178.2 673.9,178.1 676.6,177.9 679.2,177.7 681.8,177.6 684.4,177.4 687.0,177.2 689.6,177.0 692.2,176.9 694.9,176.7 697.5,176.5 700.1,176.4 702.7,176.2 705.3,176.0 707.9,175.9 710.5,175.7 713.2,175.6 715.8,175.4 718.4,175.2 721.0,175.1 723.6,174.9 726.2,174.7 728.8,174.6 731.5,174.4 734.1,174.3 736.7,174.1 739.3,174.0 741.9,173.8 744.5,173.6 747.1,173.5 749.7,173.3 752.4,173.2 755.0,173.0 757.6,172.9 760.2,172.7 762.8,172.6 765.4,172.4 768.0,172.3 770.7,172.1 773.3,172.0 775.9,171.8 778.5,171.7 781.1,171.5 783.7,171.4 786.3,171.2 789.0,171.1 791.6,170.9 794.2,170.8 796.8,170.7 799.4,170.5 802.0,170.4 804.6,170.2 807.3,170.1 809.9,169.9 812.5,169.8 815.1,169.7 817.7,169.5 820.3,169.4 822.9,169.2 825.5,169.1 828.2,169.0 830.8,168.8 833.4,168.7 836.0,168.6 838.6,168.4 841.2,168.3 843.8,168.1 846.5,168.0 849.1,167.9 851.7,167.7 854.3,167.6 856.9,167.5 859.5,167.3 862.1,167.2 864.8,167.1 867.4,166.9 870.0,166.8 872.6,166.7 875.2,166.6 877.8,166.4 880.4,166.3 883.1,166.2 885.7,166.0 888.3,165.9 890.9,165.8 893.5,165.7 896.1,165.5 898.7,165.4 901.4,165.3 904.0,165.2 906.6,165.0 909.2,164.9 911.8,164.8 914.4,164.7 917.0,164.5 919.6,164.4 922.3,164.3 924.9,164.2 927.5,164.0 930.1,163.9 932.7,163.8 935.3,163.7 937.9,163.6 940.6,163.4 943.2,163.3 945.8,163.2 948.4,163.1 951.0,163.0 953.6,162.8 956.2,162.7 958.9,162.6 961.5,162.5 964.1,162.4 966.7,162.3 969.3,162.1 971.9,162.0 974.5,161.9 977.2,161.8 979.8,161.7 982.4,161.6 985.0,161.4 987.6,161.3 990.2,161.2 992.8,161.1 995.4,161.0 998.1,160.9 1000.7,160.8 1003.3,160.7 1005.9,160.5 1008.5,160.4 1011.1,160.3 1013.7,160.2 1016.4,160.1 1019.0,160.0 1021.6,159.9 1024.2,159.8 1026.8,159.7 1029.4,159.6 1032.0,159.4 1034.7,159.3 1037.3,159.2 1039.9,159.1 1042.5,159.0 1045.1,158.9 1047.7,158.8 1050.3,158.7 1053.0,158.6 1055.6,158.5 1058.2,158.4 1060.8,158.3 1063.4,158.2 1066.0,158.1 1068.6,157.9 1071.2,157.8 1073.9,157.7 1076.5,157.6 1079.1,157.5 1081.7,157.4 1084.3,157.3 1086.9,157.2 1089.5,157.1 1092.2,157.0 1094.8,156.9 1097.4,156.8 1100.0,156.7" class="ch-invested"/><polyline points="78.0,394.0 80.6,366.3 83.2,349.2 85.8,338.9 88.5,331.6 91.1,323.5 93.7,316.8 96.3,312.5 98.9,306.3 101.5,300.8 104.1,298.3 106.8,293.7 109.4,292.1 112.0,289.2 114.6,284.9 117.2,280.9 119.8,277.9 122.4,274.5 125.0,271.1 127.7,268.8 130.3,265.7 132.9,264.0 135.5,261.1 138.1,259.6 140.7,256.6 143.3,255.0 146.0,252.3 148.6,251.0 151.2,249.5 153.8,247.8 156.4,246.0 159.0,244.9 161.6,245.6 164.3,243.9 166.9,241.1 169.5,238.8 172.1,235.3 174.7,235.7 177.3,232.4 179.9,231.4 182.6,232.6 185.2,229.4 187.8,226.4 190.4,224.4 193.0,220.7 195.6,222.3 198.2,220.0 200.8,220.4 203.5,218.4 206.1,217.3 208.7,216.2 211.3,213.1 213.9,210.9 216.5,209.9 219.1,210.4 221.8,208.5 224.4,208.5 227.0,214.1 229.6,211.4 232.2,207.8 234.8,205.3 237.4,202.6 240.1,200.8 242.7,201.8 245.3,199.9 247.9,198.1 250.5,198.7 253.1,196.4 255.7,197.2 258.4,197.2 261.0,197.9 263.6,195.0 266.2,194.1 268.8,191.8 271.4,193.4 274.0,193.8 276.6,190.0 279.3,191.1 281.9,191.5 284.5,190.5 287.1,190.8 289.7,188.1 292.3,190.2 294.9,190.0 297.6,192.9 300.2,193.0 302.8,190.9 305.4,194.6 308.0,196.7 310.6,193.1 313.2,193.1 315.9,193.9 318.5,193.9 321.1,196.1 323.7,199.3 326.3,198.3 328.9,195.1 331.5,194.7 334.2,194.7 336.8,195.2 339.4,193.7 342.0,195.7 344.6,195.7 347.2,198.6 349.8,201.4 352.5,200.8 355.1,205.1 357.7,201.4 360.3,198.8 362.9,201.0 365.5,201.4 368.1,201.7 370.7,201.4 373.4,197.7 376.0,195.4 378.6,194.8 381.2,193.7 383.8,192.6 386.4,193.0 389.0,190.5 391.7,189.8 394.3,187.9 396.9,186.7 399.5,185.9 402.1,186.4 404.7,186.8 407.3,185.9 410.0,185.1 412.6,186.1 415.2,185.7 417.8,185.3 420.4,184.4 423.0,182.6 425.6,181.3 428.3,181.8 430.9,180.8 433.5,181.5 436.1,181.9 438.7,180.5 441.3,180.4 443.9,178.6 446.5,178.8 449.2,178.5 451.8,179.1 454.4,177.2 457.0,177.3 459.6,176.0 462.2,175.6 464.8,174.9 467.5,174.1 470.1,175.2 472.7,175.1 475.3,174.6 477.9,173.6 480.5,172.5 483.1,171.0 485.8,170.0 488.4,169.6 491.0,168.6 493.6,169.3 496.2,168.9 498.8,166.8 501.4,165.4 504.1,166.0 506.7,167.0 509.3,166.3 511.9,164.9 514.5,164.1 517.1,165.5 519.7,166.0 522.3,168.2 525.0,169.1 527.6,169.5 530.2,167.3 532.8,166.6 535.4,170.1 538.0,170.1 540.6,169.4 543.3,173.4 545.9,180.1 548.5,182.8 551.1,182.5 553.7,185.4 556.3,189.7 558.9,186.6 561.6,182.3 564.2,179.9 566.8,180.0 569.4,176.7 572.0,175.1 574.6,173.8 577.2,174.2 579.9,171.7 582.5,171.0 585.1,172.1 587.7,170.7 590.3,168.4 592.9,167.5 595.5,170.6 598.1,172.8 600.8,169.8 603.4,171.5 606.0,168.2 608.6,166.4 611.2,166.2 613.8,163.7 616.4,162.5 619.1,161.0 621.7,161.1 624.3,159.7 626.9,160.0 629.5,160.8 632.1,161.3 634.7,163.4 637.4,166.3 640.0,161.9 642.6,161.9 645.2,161.7 647.8,159.5 650.4,157.7 653.0,156.5 655.7,156.5 658.3,158.9 660.9,157.4 663.5,156.6 666.1,155.5 668.7,154.7 671.3,155.1 673.9,154.8 676.6,154.6 679.2,152.2 681.8,151.6 684.4,150.2 687.0,149.2 689.6,148.2 692.2,148.9 694.9,146.6 697.5,147.7 700.1,146.6 702.7,144.5 705.3,143.3 707.9,142.4 710.5,143.6 713.2,141.7 715.8,141.5 718.4,141.0 721.0,140.0 723.6,139.3 726.2,139.6 728.8,138.0 731.5,138.7 734.1,137.5 736.7,136.4 739.3,136.6 741.9,137.5 744.5,135.3 747.1,136.0 749.7,135.4 752.4,134.8 755.0,135.8 757.6,134.7 760.2,137.1 762.8,138.3 765.4,134.8 768.0,134.6 770.7,135.4 773.3,137.2 775.9,137.1 778.5,134.7 781.1,134.3 783.7,133.5 786.3,133.6 789.0,131.9 791.6,131.8 794.2,131.9 796.8,132.3 799.4,130.9 802.0,130.2 804.6,129.3 807.3,127.7 809.9,127.7 812.5,127.1 815.1,126.5 817.7,126.4 820.3,125.4 822.9,125.2 825.5,124.6 828.2,123.4 830.8,122.2 833.4,121.8 836.0,119.4 838.6,120.9 841.2,122.1 843.8,121.7 846.5,120.7 849.1,120.6 851.7,118.9 854.3,117.6 856.9,117.5 859.5,120.2 862.1,119.4 864.8,123.2 867.4,119.9 870.0,118.6 872.6,118.0 875.2,116.2 877.8,118.8 880.4,116.3 883.1,115.5 885.7,116.1 888.3,115.5 890.9,114.4 893.5,113.0 896.1,112.0 898.7,111.8 901.4,115.0 904.0,120.5 906.6,115.5 909.2,113.6 911.8,113.0 914.4,110.6 917.0,107.8 919.6,109.5 922.3,110.3 924.9,106.2 927.5,104.9 930.1,105.1 932.7,104.0 935.3,102.3 937.9,100.1 940.6,99.8 943.2,99.0 945.8,97.9 948.4,96.7 951.0,98.7 953.6,95.9 956.2,96.2 958.9,94.5 961.5,96.5 964.1,97.7 966.7,96.3 969.3,99.8 971.9,99.7 974.5,103.3 977.2,99.6 979.8,101.2 982.4,105.2 985.0,101.9 987.6,99.7 990.2,102.2 992.8,99.6 995.4,100.6 998.1,99.3 1000.7,98.5 1003.3,98.3 1005.9,95.9 1008.5,94.4 1011.1,95.1 1013.7,97.1 1016.4,97.8 1019.0,94.3 1021.6,92.7 1024.2,91.9 1026.8,89.9 1029.4,88.7 1032.0,90.2 1034.7,88.2 1037.3,86.9 1039.9,86.3 1042.5,85.4 1045.1,84.6 1047.7,84.9 1050.3,82.5 1053.0,83.6 1055.6,82.4 1058.2,82.9 1060.8,85.3 1063.4,85.5 1066.0,83.1 1068.6,81.2 1071.2,80.2 1073.9,79.3 1076.5,78.0 1079.1,77.0 1081.7,76.9 1084.3,77.0 1086.9,76.2 1089.5,76.6 1092.2,78.7 1094.8,74.6 1097.4,72.5 1100.0,73.5" class="ch-spy"/><polyline points="78.0,394.0 80.6,366.3 83.2,349.2 85.8,338.9 88.5,331.6 91.1,323.5 93.7,316.8 96.3,312.5 98.9,306.3 101.5,300.8 104.1,298.3 106.8,293.7 109.4,292.1 112.0,289.2 114.6,284.9 117.2,280.9 119.8,277.9 122.4,274.5 125.0,271.1 127.7,268.8 130.3,265.7 132.9,264.0 135.5,261.1 138.1,259.6 140.7,256.6 143.3,255.0 146.0,252.3 148.6,251.0 151.2,249.5 153.8,247.8 156.4,246.0 159.0,244.9 161.6,245.6 164.3,243.9 166.9,241.1 169.5,238.8 172.1,235.3 174.7,235.7 177.3,232.4 179.9,231.4 182.6,232.6 185.2,229.4 187.8,226.4 190.4,224.4 193.0,220.7 195.6,222.3 198.2,220.0 200.8,220.4 203.5,218.4 206.1,217.3 208.7,216.2 211.3,213.1 213.9,210.9 216.5,209.9 219.1,210.4 221.8,208.5 224.4,208.5 227.0,214.1 229.6,211.4 232.2,207.8 234.8,205.3 237.4,202.6 240.1,200.8 242.7,201.8 245.3,199.9 247.9,198.1 250.5,198.7 253.1,196.4 255.7,197.2 258.4,197.2 261.0,197.9 263.6,195.0 266.2,194.1 268.8,191.8 271.4,193.4 274.0,193.8 276.6,190.0 279.3,191.1 281.9,191.5 284.5,190.5 287.1,190.8 289.7,188.1 292.3,190.2 294.9,190.0 297.6,192.9 300.2,192.5 302.8,192.1 305.4,191.7 308.0,191.3 310.6,190.9 313.2,190.6 315.9,190.2 318.5,189.9 321.1,189.5 323.7,189.2 326.3,188.9 328.9,188.7 331.5,188.4 334.2,188.1 336.8,187.8 339.4,187.5 342.0,189.6 344.6,189.6 347.2,192.6 349.8,195.4 352.5,195.2 355.1,194.9 357.7,194.5 360.3,194.2 362.9,193.9 365.5,193.6 368.1,193.3 370.7,193.1 373.4,192.8 376.0,190.5 378.6,190.0 381.2,188.9 383.8,187.8 386.4,188.2 389.0,185.8 391.7,185.1 394.3,183.2 396.9,182.0 399.5,181.3 402.1,181.8 404.7,182.2 407.3,181.3 410.0,180.6 412.6,181.5 415.2,181.2 417.8,180.8 420.4,180.0 423.0,178.2 425.6,176.9 428.3,177.4 430.9,176.5 433.5,177.2 436.1,177.6 438.7,176.2 441.3,176.1 443.9,174.3 446.5,174.5 449.2,174.2 451.8,174.8 454.4,173.0 457.0,173.1 459.6,171.8 462.2,171.4 464.8,170.8 467.5,170.0 470.1,171.1 472.7,171.0 475.3,170.5 477.9,169.5 480.5,168.5 483.1,166.9 485.8,166.0 488.4,165.6 491.0,164.6 493.6,165.3 496.2,164.9 498.8,162.9 501.4,161.4 504.1,162.1 506.7,163.1 509.3,162.4 511.9,161.0 514.5,160.2 517.1,161.6 519.7,162.2 522.3,164.3 525.0,164.2 527.6,164.0 530.2,163.9 532.8,163.7 535.4,163.5 538.0,163.3 540.6,163.1 543.3,163.0 545.9,162.9 548.5,162.7 551.1,162.6 553.7,162.5 556.3,162.4 558.9,162.3 561.6,162.1 564.2,162.0 566.8,161.9 569.4,158.8 572.0,157.2 574.6,155.9 577.2,156.4 579.9,153.9 582.5,153.3 585.1,154.5 587.7,153.1 590.3,150.9 592.9,150.0 595.5,153.2 598.1,155.4 600.8,152.5 603.4,154.2 606.0,151.0 608.6,149.2 611.2,149.1 613.8,146.6 616.4,145.4 619.1,144.0 621.7,144.1 624.3,142.7 626.9,143.1 629.5,143.9 632.1,144.4 634.7,146.6 637.4,149.6 640.0,149.6 642.6,149.5 645.2,149.4 647.8,149.3 650.4,147.6 653.0,146.4 655.7,146.4 658.3,148.8 660.9,147.4 663.5,146.6 666.1,145.6 668.7,144.7 671.3,145.1 673.9,144.8 676.6,144.7 679.2,142.4 681.8,141.8 684.4,140.4 687.0,139.4 689.6,138.4 692.2,139.1 694.9,136.8 697.5,138.0 700.1,136.9 702.7,134.8 705.3,133.6 707.9,132.7 710.5,133.9 713.2,132.1 715.8,131.9 718.4,131.4 721.0,130.4 723.6,129.7 726.2,130.0 728.8,128.4 731.5,129.1 734.1,128.0 736.7,126.8 739.3,127.1 741.9,128.0 744.5,125.8 747.1,126.6 749.7,126.0 752.4,125.4 755.0,126.4 757.6,125.2 760.2,127.7 762.8,128.9 765.4,128.9 768.0,128.8 770.7,129.8 773.3,131.5 775.9,131.5 778.5,129.0 781.1,128.6 783.7,127.9 786.3,127.9 789.0,126.3 791.6,126.2 794.2,126.3 796.8,126.8 799.4,125.3 802.0,124.7 804.6,123.7 807.3,122.1 809.9,122.2 812.5,121.6 815.1,121.0 817.7,120.9 820.3,119.8 822.9,119.7 825.5,119.1 828.2,117.9 830.8,116.7 833.4,116.3 836.0,113.9 838.6,115.4 841.2,116.6 843.8,116.2 846.5,115.2 849.1,115.1 851.7,113.5 854.3,112.2 856.9,112.1 859.5,114.7 862.1,114.0 864.8,117.8 867.4,114.5 870.0,113.2 872.6,112.6 875.2,110.8 877.8,113.4 880.4,110.9 883.1,110.1 885.7,110.7 888.3,110.1 890.9,109.0 893.5,107.6 896.1,106.6 898.7,106.4 901.4,109.6 904.0,115.1 906.6,110.1 909.2,108.2 911.8,107.7 914.4,105.2 917.0,102.5 919.6,104.1 922.3,105.0 924.9,100.8 927.5,99.5 930.1,99.7 932.7,98.6 935.3,97.0 937.9,94.8 940.6,94.5 943.2,93.7 945.8,92.6 948.4,91.4 951.0,93.4 953.6,90.6 956.2,90.9 958.9,89.2 961.5,91.2 964.1,92.4 966.7,91.0 969.3,94.5 971.9,94.4 974.5,98.0 977.2,97.9 979.8,97.8 982.4,97.7 985.0,97.5 987.6,97.4 990.2,97.2 992.8,97.0 995.4,98.1 998.1,96.8 1000.7,96.0 1003.3,95.8 1005.9,93.4 1008.5,92.0 1011.1,92.6 1013.7,94.6 1016.4,95.3 1019.0,91.9 1021.6,90.2 1024.2,89.4 1026.8,87.4 1029.4,86.2 1032.0,87.7 1034.7,85.7 1037.3,84.4 1039.9,83.8 1042.5,82.9 1045.1,82.2 1047.7,82.4 1050.3,80.1 1053.0,81.2 1055.6,80.0 1058.2,80.5 1060.8,82.8 1063.4,83.0 1066.0,80.6 1068.6,78.7 1071.2,77.7 1073.9,76.9 1076.5,75.6 1079.1,74.5 1081.7,74.4 1084.3,74.5 1086.9,73.8 1089.5,74.1 1092.2,76.2 1094.8,72.1 1097.4,70.1 1100.0,71.1" class="ch-strat"/><circle cx="1100.0" cy="73.5" r="3.6" class="ch-dot-spy"/><circle cx="1100.0" cy="71.1" r="4.2" class="ch-dot-strat"/></svg>
     <div class="chart-legend">
-      <span class="lg"><span class="sw" style="background:#3d7bfd"></span>Strategy DCA</span>
-      <span class="lg"><span class="sw" style="background:#8b909c"></span>S&amp;P 500 DCA</span>
+      <span class="lg"><span class="sw" style="background:#3d7bfd"></span>VolBand 2σ DCA</span>
+      <span class="lg"><span class="sw" style="background:#8b909c"></span>SPY DCA</span>
       <span class="lg"><span class="sw" style="background:#454b58"></span>Capital invested</span>
     </div>
   </div>
   <div class="grid4">
     <div class="stat">
-      <div class="v accent">$8.2M</div>
-      <div class="k">Strategy Final · backtest</div>
-      <div class="p">What the historical test ended at on a $94k total deposit.</div>
+      <div class="v accent">$3.38M</div>
+      <div class="k">VolBand Final</div>
+      <div class="p">8.63× the total deposit.</div>
+    </div>
+    <div class="stat">
+      <div class="v">$3.18M</div>
+      <div class="k">SPY DCA Final</div>
+      <div class="p">8.11× the total deposit.</div>
+    </div>
+    <div class="stat">
+      <div class="v accent">+$203k</div>
+      <div class="k">Excess Outcome</div>
+      <div class="p">Difference over 33 years of DCA accumulation.</div>
     </div>
     <div class="stat">
       <div class="v">$392k</div>
-      <div class="k">S&amp;P 500 DCA Final</div>
-      <div class="p">Same deposit, just buying the index instead.</div>
-    </div>
-    <div class="stat">
-      <div class="v accent">+$7.8M</div>
-      <div class="k">Excess Outcome · backtest</div>
-      <div class="p">Hypothetical extra dollars vs the index.</div>
-    </div>
-    <div class="stat">
-      <div class="v accent">+41.8%</div>
-      <div class="k">Annualized IRR · backtest</div>
-      <div class="p">Effective yearly growth rate on money invested over time.</div>
+      <div class="k">Total Contributed</div>
+      <div class="p">$1,000/month over 33 years.</div>
     </div>
   </div>
-  <table class="tbl" style="margin-top:40px">
+</section>
+
+<section id="track" class="reveal">
+  <div class="section-head">
+    <div class="eyebrow">Track Record</div>
+    <h2>Every year on record.</h2>
+    <p class="lede">All 34 calendar years in the backtest — the winning years, the losing years, and the years the strategy lagged the index. Concealing the lagging years would compromise the only thing the strategy trades on: that its rule set was specified before any of these returns existed.</p>
+  </div>
+  <div class="tbl-wrap">
+  <table class="tbl">
     <thead>
-      <tr><th>Monthly Deposit</th><th class="r">Total Invested (18y)</th><th class="r">Backtest Final</th><th class="r">Realistic Forward*</th></tr>
+      <tr><th>Year</th><th class="r">VolBand</th><th class="r">SPY</th><th class="r">Alpha</th></tr>
     </thead>
     <tbody>
-      <tr><td>$217 &nbsp;≈&nbsp; ฿7,500</td><td class="r muted">~$48,000</td><td class="r muted">~$4.1M</td><td class="r">~$350k – $900k</td></tr>
-      <tr class="hl"><td>$433 &nbsp;≈&nbsp; ฿15,000</td><td class="r">$93,733</td><td class="r">$8.2M</td><td class="r accent">~$700k – $1.8M</td></tr>
-      <tr><td>$1,000 &nbsp;≈&nbsp; ฿35,000</td><td class="r muted">~$216,000</td><td class="r muted">~$19M</td><td class="r">~$1.6M – $4.1M</td></tr>
-      <tr><td>$2,000 &nbsp;≈&nbsp; ฿70,000</td><td class="r muted">~$432,000</td><td class="r muted">~$38M</td><td class="r">~$3.2M – $8.2M</td></tr>
+      <tr><td>1993</td><td class="r accent">+0.5%</td><td class="r muted">+0.5%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>1994</td><td class="r neg">-3.8%</td><td class="r neg">-3.8%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>1995</td><td class="r accent">+32.7%</td><td class="r muted">+32.7%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>1996</td><td class="r accent">+17.7%</td><td class="r muted">+17.7%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>1997</td><td class="r accent">+25.2%</td><td class="r muted">+25.2%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>1998</td><td class="r accent">+26.6%</td><td class="r muted">+26.6%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>1999</td><td class="r accent">+16.0%</td><td class="r muted">+16.0%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2000</td><td class="r neg">-4.2%</td><td class="r neg">-5.3%</td><td class="r accent">+1.1%</td></tr>
+      <tr><td>2001</td><td class="r accent">+2.9%</td><td class="r neg">-15.8%</td><td class="r accent">+18.7%</td></tr>
+      <tr><td>2002</td><td class="r neg">-19.4%</td><td class="r neg">-21.2%</td><td class="r accent">+1.8%</td></tr>
+      <tr><td>2003</td><td class="r accent">+22.1%</td><td class="r muted">+30.8%</td><td class="r neg">-8.6%</td></tr>
+      <tr><td>2004</td><td class="r accent">+8.0%</td><td class="r muted">+8.0%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2005</td><td class="r accent">+6.7%</td><td class="r muted">+6.7%</td><td class="r muted">-0.0%</td></tr>
+      <tr><td>2006</td><td class="r accent">+12.5%</td><td class="r muted">+12.5%</td><td class="r muted">-0.0%</td></tr>
+      <tr><td>2007</td><td class="r accent">+3.0%</td><td class="r muted">+3.0%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2008</td><td class="r accent">+0.9%</td><td class="r neg">-33.3%</td><td class="r accent">+34.2%</td></tr>
+      <tr><td>2009</td><td class="r accent">+22.4%</td><td class="r muted">+36.9%</td><td class="r neg">-14.5%</td></tr>
+      <tr><td>2010</td><td class="r accent">+18.8%</td><td class="r muted">+18.8%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2011</td><td class="r neg">-11.4%</td><td class="r neg">-1.1%</td><td class="r neg">-10.3%</td></tr>
+      <tr><td>2012</td><td class="r accent">+9.9%</td><td class="r muted">+10.1%</td><td class="r neg">-0.2%</td></tr>
+      <tr><td>2013</td><td class="r accent">+25.2%</td><td class="r muted">+25.2%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2014</td><td class="r accent">+17.0%</td><td class="r muted">+17.0%</td><td class="r muted">-0.0%</td></tr>
+      <tr><td>2015</td><td class="r neg">-5.5%</td><td class="r muted">+3.7%</td><td class="r neg">-9.2%</td></tr>
+      <tr><td>2016</td><td class="r accent">+17.2%</td><td class="r muted">+17.2%</td><td class="r muted">-0.0%</td></tr>
+      <tr><td>2017</td><td class="r accent">+19.0%</td><td class="r muted">+19.0%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2018</td><td class="r neg">-10.2%</td><td class="r neg">-10.2%</td><td class="r muted">-0.0%</td></tr>
+      <tr><td>2019</td><td class="r accent">+20.9%</td><td class="r muted">+20.9%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2020</td><td class="r accent">+17.9%</td><td class="r muted">+17.9%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2021</td><td class="r accent">+29.6%</td><td class="r muted">+29.6%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2022</td><td class="r neg">-14.5%</td><td class="r neg">-14.0%</td><td class="r neg">-0.5%</td></tr>
+      <tr><td>2023</td><td class="r accent">+18.1%</td><td class="r muted">+18.2%</td><td class="r neg">-0.2%</td></tr>
+      <tr><td>2024</td><td class="r accent">+22.5%</td><td class="r muted">+22.5%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2025</td><td class="r accent">+14.3%</td><td class="r muted">+14.3%</td><td class="r muted">+0.0%</td></tr>
+      <tr><td>2026</td><td class="r accent">+6.9%</td><td class="r muted">+6.9%</td><td class="r muted">+0.0%</td></tr>
     </tbody>
   </table>
-  <p class="tbl-note">* Realistic Forward column applies the +20 to +30%/yr realistic-forward range (see Risk Disclosure) as DCA IRR over 18 years — what a sophisticated investor should anchor on. The Backtest Final column is the simulation result and is overstated by survivorship-bias inflation; useful as a relative benchmark, not as an absolute expectation.</p>
+  </div>
+  <p class="tbl-note">"Alpha" is the strategy's return minus SPY's return for the same calendar year — positive means VolBand beat SPY, negative means it lagged. The first and last years in the table are partial-year windows (1993 starts in November after the backtest's warmup; 2026 ends in June at run date).</p>
 </section>
 
 <section id="engagement" class="reveal">
   <div class="section-head">
     <div class="eyebrow">Engagement</div>
     <h2>How the strategy is delivered.</h2>
-    <p class="lede">A research subscription, not a fund. Capital and custody remain entirely with you.</p>
+    <p class="lede">A signal subscription, not a fund. Your capital and custody remain entirely with you.</p>
   </div>
   <div class="eng">
     <div class="eng-item">
       <div class="idx">01</div>
-      <h3>Monthly Picks</h3>
-      <p>On the first Monday of each month, five equity positions at equal weight — each with thesis, near-term catalyst, stop-loss trigger, and explicit risk factors.</p>
+      <h3>Monthly Signal</h3>
+      <p>On the first trading day of each month, you receive the current state: in SPY or in cash. The signal flips roughly once every three years on average — most months, the message is simply "no change."</p>
     </div>
     <div class="eng-item">
       <div class="idx">02</div>
-      <h3>Weekly Performance</h3>
-      <p>Every Saturday, a performance summary of the current portfolio. Material thesis breaks are flagged immediately for emergency action.</p>
+      <h3>Capital Stays Yours</h3>
+      <p>You hold SPY (or any S&amp;P 500 equivalent — VOO, IVV) and cash equivalent (SGOV, BIL, money market) in your own brokerage account. The service never holds, custodies, or directs your funds.</p>
     </div>
     <div class="eng-item">
       <div class="idx">03</div>
-      <h3>Capital Stays Yours</h3>
-      <p>You execute through your own broker. The service never holds, custodies, or directs your funds. Research arrives; the decisions remain with you.</p>
+      <h3>Twelve Trades · Thirty-Three Years</h3>
+      <p>The historical signal switched twelve times across the full backtest. That is roughly one trade every three years. Execution friction, tax drag, and behavioral cost are all minimized by design.</p>
     </div>
   </div>
   <div class="fee-line">
-    Engagement is a flat <strong>฿5,000 per month</strong> — approximately $135. No performance fee, no setup fee, no lock-up; thirty days' notice to conclude. A six-month minimum is recommended to observe the strategy across distinct market conditions. <strong style="color:var(--ink)">Scoring weights are re-evaluated against alpha contribution once thirty closed positions have accumulated</strong> — the framework adapts to evidence rather than remaining static. Full terms are provided on request.
+    Engagement is a flat <strong>฿3,000 per month</strong> (approximately $85), billed annually in advance. No performance fee, no setup fee, no lock-up. Thirty days' notice to conclude. The flat fee is intentional: a percent-of-assets structure would have the operator compounding faster than the client, and a performance fee would reward the operator for the years when the strategy beat SPY by 1&ndash;2 pp and ignore the years it lagged. Neither is honest. Full terms are provided on request.
   </div>
 </section>
 
 <section class="reveal">
   <div class="section-head">
     <div class="eyebrow">Risk Disclosure</div>
-    <h2>What you should know.</h2>
+    <h2>What you should know before subscribing.</h2>
   </div>
   <ul class="risk-list">
-    <li>This is <strong>research and educational signals</strong> — not registered investment advice in Thailand, the United States, or any other jurisdiction.</li>
-    <li>The strategy was <strong>refined in May 2026</strong> after systematic factor backtesting. The previous configuration (60-day/20-day momentum with a five-filter screener) was replaced with academic Jegadeesh-Titman 12-1 momentum and a tradable-floor filter only. Both configurations are documented; the change was made on evidence, not on conviction.</li>
-    <li>The backtest uses a <strong>T+1 execution model</strong> — the strategy decides at the close of day T (after market) and executes trades at the close of day T+1 (next trading day). This is realistic for a retail trader and costs roughly 0.85%/yr versus an unrealistic close-to-close model where you could supposedly trade at a close you have not yet seen. The numbers shown on this page already reflect this honest execution assumption.</li>
-    <li>The backtest carries <strong>survivorship-bias inflation</strong>. Plain meaning: the test only uses companies that are in the S&amp;P 500 today, so companies that went bankrupt during the test period (Lehman Brothers, WaMu, Bear Stearns, GM, Chrysler, and dozens more) are silently excluded. The strategy never had to "buy" those — but a real investor running it in 2008 would have. The inflation is estimated at <strong>3–5% per year over the 18-year window</strong>. A realistic forward expectation is <strong>+20 to +30% annualized alpha</strong> versus the S&amp;P 500, not the +22.8% the backtest shows.</li>
-    <li>The strategy lost <strong>−32.4% in 2008</strong> and showed an 18-year maximum drawdown of <strong>−56.4%</strong>. Momentum strategies are particularly exposed to deep, slow-recovering drawdowns in financial-crisis regimes. Drawdowns of −30% to −50% are plausible in any year and should be planned for, not treated as exceptional.</li>
-    <li>The strategy lagged the index in fast-correction regimes (2015–16 China devaluation, 2018 Q4 sell-off, 2009 momentum-crash rally). Leadership-rotation drawdowns are a structural risk of the 12-month signal.</li>
-    <li>A concentrated five-position portfolio is materially more volatile than an index fund. Single-week liquidation events can produce double-digit losses.</li>
-    <li>You retain <strong>full responsibility for trading decisions</strong>. No returns are guaranteed; the subscription fee is not refundable based on performance.</li>
-    <li>Foreign capital-gains treatment for Thai residents depends on remittance. Consult a Thai accountant before relying on after-tax projections.</li>
-    <li>The live track record on the current strategy is <strong>not yet established</strong>. The first monthly cycle on the new configuration runs June 2026. The backtest is the primary evidence base — and an inherently limited one.</li>
+    <li>This is <strong>research and educational signals</strong> &mdash; not registered investment advice in Thailand, the United States, or any other jurisdiction. Nothing on this page constitutes an offer to buy or sell any security.</li>
+    <li>The 33-year backtest contains <strong>no survivorship-bias inflation</strong>: the strategy holds the SPY ETF itself, not a basket of selected stocks. Every dollar shown in the historical record was technically achievable by any retail investor with brokerage access. This is the principal reason the headline numbers are far more modest than typical backtests of stock-picking systems &mdash; honest single-asset numbers always are.</li>
+    <li>The signal lags the price by one month by design (no repaint) and uses a 9-month moving average. In a <strong>fast crash</strong> &mdash; March 2020 is the canonical example &mdash; the model will not exit in time and will participate fully in the drawdown. The crisis-window table above shows exactly that outcome for COVID.</li>
+    <li>In <strong>shallow corrections</strong> (2011 euro debt, 2015&ndash;16 China selloff) the model occasionally triggers a false exit, sells near the local bottom, and re-enters after a partial recovery. The strategy underperformed SPY by 8&ndash;10 pp in those windows. These small losses are the premium paid for the protection in 2000 and 2008.</li>
+    <li>The CAGR advantage of ~0.7 pp/yr is <strong>small enough to disappear</strong> in a benign forward period with no major drawdown event. Investors expecting return enhancement will be disappointed; the value proposition is drawdown reduction, not alpha.</li>
+    <li>The strategy assumes the cash leg earns the live 3-month US Treasury bill yield (^IRX). In environments where short rates are at zero (2009&ndash;2015, 2020&ndash;2022), the cash drag is non-trivial. The backtest already reflects this.</li>
+    <li>SPY is a <strong>single asset, single country, single currency</strong>. The strategy provides no diversification beyond what the S&amp;P 500 already provides. A globally diversified portfolio would require additional overlays.</li>
+    <li>Trading frequency is low (~0.4 switches/yr) but <strong>tax treatment</strong> still matters. Short-term capital gains apply if a position is held under twelve months and held in a taxable account. The historical signal occasionally produced sub-12-month holds. Consult a tax advisor for your jurisdiction.</li>
+    <li>The backtest uses <strong>Kalman filter parameters and SMA length specified in advance</strong> (Pine library defaults: R%=0.1, Q%=0.01, 9-month window, 2σ). No optimization was performed against the historical data. Different parameter choices would produce different numbers; the published numbers reflect one specific, pre-committed configuration.</li>
+    <li>The forward live track record on this overlay <strong>has not yet been established</strong>. Live tracking starts the month of this site's publication. Backtest results &mdash; even honest ones &mdash; are inherently limited.</li>
     <li><strong>Past performance does not guarantee future results.</strong></li>
   </ul>
 </section>
@@ -510,23 +505,25 @@ footer{max-width:1180px;margin:0 auto;padding:56px 32px 28px;
 <section id="contact" class="contact reveal">
   <div class="eyebrow">Contact</div>
   <h2>A single conversation<br>is the next step.</h2>
-  <p class="lede">If this strategy fits your situation, an introduction can be arranged directly.</p>
+  <p class="lede">If a drawdown-aware S&amp;P 500 overlay fits your situation, an introduction can be arranged directly.</p>
   <a class="btn" href="mailto:contact@sprive.ai?subject=PRIVATE.SPRIV%C3%89.AI%20Inquiry">Request an Introduction</a>
 </section>
 
 <footer>
   <div>
     <div class="foot-brand">PRIVATE.SPRIVÉ.AI</div>
-    <div class="foot-meta">Bangkok, Thailand · © 2026 · All rights reserved</div>
+    <div class="foot-meta">Bangkok, Thailand &middot; &copy; 2026 &middot; All rights reserved</div>
   </div>
   <div class="foot-links">
     <a href="#approach">Approach</a>
     <a href="#performance">Performance</a>
+    <a href="#crises">Crises</a>
+    <a href="#track">Track Record</a>
     <a href="#engagement">Engagement</a>
     <a href="#contact">Contact</a>
   </div>
 </footer>
-<p class="foot-disclaimer">Research-only signal service. Not a licensed investment advisor in any jurisdiction. Past performance does not guarantee future results. The backtest shown is hypothetical and contains implicit survivorship bias; live results may differ materially due to market conditions, execution, taxation, or regime change. Nothing on this page is an offer to buy or sell any security.</p>
+<p class="foot-disclaimer">Research-only signal service. Not a licensed investment advisor in any jurisdiction. Past performance does not guarantee future results. The backtest shown is hypothetical: while no survivorship-bias adjustment is required for a single-asset SPY strategy, live results may still differ materially from backtest results due to execution timing, trading costs, cash-yield availability, taxation, slippage, or regime change. Nothing on this page is an offer to buy or sell any security or financial instrument. SPRIVÉ.AI is the publisher's brand name and is not affiliated with State Street, S&amp;P, or any index provider.</p>
 
 <script>
 const nav=document.querySelector('.nav');
